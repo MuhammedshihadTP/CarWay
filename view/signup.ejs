@@ -1,0 +1,45 @@
+<div class="container" style="
+height: 100%;
+width: 100vh;
+justify-content: center;
+display: flex;
+margin-top: 3px;
+">
+  <div class="d-flex" style="width: 50%; height: 60%; margin-top: 10%;  ">
+    <form action="/signup" method="post" class="form-singup container bg-light">
+      <h2>Sign Up</h2>
+
+      <div class="form-group">
+        <div class="inputbox mb-4" id="imp">
+          <input type="text" placeholder="Enter The Name" name="name" class="w-100" style="height: 50px" id="enterdmail" />
+          <p id="throwerorr1" class="text-danger"></p>
+        </div>
+
+        <div class="form-group">
+          <div class="inputbox mb-4" id="imp">
+            <input type="text" placeholder="UserName" class="w-100" name="username" style="height: 50px" id="enterdmail" />
+            <p id="throwerorr1" class="text-danger"></p>
+          </div>
+          <div class="inputbox mb-4" id="imp">
+            <input type="text" placeholder="Enter the Email" class="w-100" name="email" style="height: 50px" id="enterdmail" />
+            <p id="throwerorr1" class="text-danger"></p>
+          </div>
+          <div class="inputbox mb-4" id="imp">
+            <input type="text" placeholder="password" class="w-100" name="password" style="height: 50px" id="enterdmail" />
+            <i class="bi bi-eye-slash" id="togglePassword"></i>
+            <p id="throwerorr1" class="text-danger"></p>
+          </div>
+          <div class="inputbox mb-3">
+            <input type="password" placeholder="Conformpassword " class="w-100" style="height: 50px" id="enterdpassword" />
+            <p id="throwerorr2" class="text-danger"></p>
+            <a href="" style="text-decoration: none; color: black" class="disabled">forget password?</a>
+          </div>
+
+          <input type="submit"  value="Sign Up" class="w-100 btn rounded-4" />
+          <p class="text-center">Already Have account? <a href="login.html" style="text-decoration: none;">login</a></p>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
