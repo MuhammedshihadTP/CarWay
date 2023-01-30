@@ -4,8 +4,8 @@ const { home, signup, getsignup, postsignup } = require('../controller/Uercontro
 const router=Router()
 
 router.get('/',home)
+// router.get('/home',gethome);
 router.get('/signup',getsignup);
 router.post('/signup',postsignup);
-
 
 module.exports=router;

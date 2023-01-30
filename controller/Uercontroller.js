@@ -1,36 +1,31 @@
-const usersignup = require('../models/UserModel');
-const Usermodel=require('../models/UserModel')
+const usersignup = require("../models/UserModel");
+const Usermodel = require("../models/UserModel");
+const bcrypt = require("bcrypt");
 
-
-module.exports={
-    home:(req,res)=>{
-        res.render("home")
-
+module.exports = {
+    home: (req, res) => {
+        res.render("home");
     },
 
-    getsignup:(req,res)=>{
-        res.render('signup');
+    getsignup: (req, res) => {
+        res.render("signup");
     },
 
-    postsignup:(req,res)=>{
-        const newUser= new usersignup({
-            email:req.body.name,
-            username:req.body.username,
-            email:req.body.email,
-            password:req.body.password,
+    postsignup: async (req, res) => {
+        try {
+            bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+                req.body.password = hashedPassword
+                const newUser = new usersignup(req.body);
+                console.log(newUser);
 
-        });
+                newUser.save();
+               
 
-        newUser.save().then((result)=>{
-            res.redirct('home')
-            console.log(result);
-    })
+                res.redirect("/");
+            })
 
-
-
-            
-    }
-
-
-
-}
+        } catch (error) {
+            console.log(error);
+        }
+    },
+};
