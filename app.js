@@ -6,6 +6,7 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const cookiparser = require("cookie-parser");
 const session = require("express-session");
+const nocach=require('nocache')
 
 // connecting mongoose
 mongoose.connect("mongodb://127.0.0.1:27017/CarWay");
@@ -15,7 +16,19 @@ db.once("open", () => {
   console.log("connected to the mongoose");
 });
 
+
+;
+
 const app = express();
+
+
+//cache clearing... 
+app.use(function (req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+next();
+})
 
 app.use(cookiparser());
 app.use(

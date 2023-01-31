@@ -47,11 +47,11 @@
             <!-- Search Form -->
             <div class="sinlge-bar" style="margin-bottom: 10px;">
 
-
-              <a href="login.html#" class="single-icon btn" style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i class="ti-power-off"></i>login</a>
-
-
-
+              <% if(user) {%>
+              <a href="/logout" class="single-icon btn" style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i class="ti-power-off"></i>logout</a>
+              <% }else{ %>
+              <a href="/login" class="single-icon btn" style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i class="ti-power-off"></i>login</a>
+              <% } %>
             </div>
 
 
