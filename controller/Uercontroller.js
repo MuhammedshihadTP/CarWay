@@ -3,6 +3,8 @@ const Usermodel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const { exists } = require("../models/UserModel");
 const session = require("express-session");
+const { render } = require("ejs");
+const transporter = require("../mail/transporter");
 
 module.exports = {
   home: async (req, res) => {
@@ -29,13 +31,46 @@ module.exports = {
       if (userExist) {
         return res.status(400).json({ msg: "email already exists" });
       } else {
-        bcrypt.hash(req.body.password, 10).then((hashedPassword) => {
-          req.body.password = hashedPassword;
-          const newUser = new usersignup(req.body);
+        const token = Math.floor(100000 + Math.random() * 900000);
+
+        req.body.Token = token;
+
+        req.session.signup = req.body;
+        transporter.sendMail({
+          from: "carway@gmail.com",
+          to: email,
+          subject: "OTP verification",
+          html:
+            "<h3>OTP for account verification is </h3>" +
+            "<h1 style='font-weight:bold;'>" +
+            token +
+            "</h1>",
+        }),
+          res.render("otp");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  otpverification: async (req, res) => {
+    try {
+      let { name, email, password, username, Token } = req.session.signup;
+
+      if (req.body.otp == Token) {
+        console.log(password);
+
+        bcrypt.hash(password, 10).then((hashedPassword) => {
+          password = hashedPassword;
+          console.log(password);
+          const newUser = new Usermodel({ name, email, password, username });
           console.log(newUser);
           newUser.save();
-          res.redirect("/login");
         });
+
+        res.redirect("/login");
+      } else {
+        res.redirect("");
       }
     } catch (error) {
       console.log(error);
@@ -57,7 +92,7 @@ module.exports = {
     console.log(req.body);
     const user = await Usermodel.findOne({ email: email });
     if (!user) {
-      res.status(401).json({ msg: "user nit founded" });
+      res.status(401).json({ msg: "user not founded" });
     }
     if (user) {
       bcrypt.compare(password, user.password).then((isvalid) => {
