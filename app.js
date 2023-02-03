@@ -7,9 +7,11 @@ const mongoose = require("mongoose");
 const cookiparser = require("cookie-parser");
 const session = require("express-session");
 const nocach=require('nocache')
+require('dotenv').config()
+
 
 // connecting mongoose
-mongoose.connect("mongodb://127.0.0.1:27017/CarWay");
+mongoose.connect(process.env.MONGO_URL);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -17,7 +19,7 @@ db.once("open", () => {
 });
 
 
-;
+
 
 const app = express();
 

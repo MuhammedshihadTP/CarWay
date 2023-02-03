@@ -1,7 +1,7 @@
 const usersignup = require("../models/UserModel");
 const Usermodel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
-const { exists } = require("../models/UserModel");
+const { exists, rawListeners } = require("../models/UserModel");
 const session = require("express-session");
 const { render } = require("ejs");
 const transporter = require("../mail/transporter");
@@ -31,10 +31,9 @@ module.exports = {
       if (userExist) {
         return res.status(400).json({ msg: "email already exists" });
       } else {
-        const token = Math.floor(100000 + Math.random() * 900000);
+        const token = Math.floor(10000 + Math.random() * 900000);
 
         req.body.Token = token;
-
         req.session.signup = req.body;
         transporter.sendMail({
           from: "carway@gmail.com",
@@ -53,24 +52,46 @@ module.exports = {
     }
   },
 
+  getotpverification: async (req, res) => {
+    try {
+      let { name, email, Token } = req.session.signup;
+      if (req.query.id) {
+        const token = Math.floor(10000 + Math.random() * 900000);
+        transporter.sendMail({
+          from: "carway@gmail.com",
+          to: email,
+          subject: "OTP verification",
+          html:
+            "<h3> Mr  OTP for account verification is </h3>" +
+            "<h1 style='font-weight:bold;'>" +
+            token +
+            "</h1>",
+        });
+      }
+      req.session.signup.Token = token
+      res.render("otp");
+    } catch (error) { }
+  },
+
   otpverification: async (req, res) => {
     try {
+      console.log(req.session.signup);
+      console.log("helooo");
+
       let { name, email, password, username, Token } = req.session.signup;
-
       if (req.body.otp == Token) {
-        console.log(password);
-
+        console.log(password, "heloooo");
         bcrypt.hash(password, 10).then((hashedPassword) => {
           password = hashedPassword;
-          console.log(password);
-          const newUser = new Usermodel({ name, email, password, username });
+          console.log(password,"hai");
+          const newUser = new usersignup({ name, email, password, username });
           console.log(newUser);
           newUser.save();
-        });
+        }); 
 
         res.redirect("/login");
       } else {
-        res.redirect("");
+        res.redirect("/otpverification");
       }
     } catch (error) {
       console.log(error);
@@ -89,7 +110,7 @@ module.exports = {
 
   postlogin: async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
+    console.log(req.body,"helllo");
     const user = await Usermodel.findOne({ email: email });
     if (!user) {
       res.status(401).json({ msg: "user not founded" });
@@ -114,4 +135,20 @@ module.exports = {
       console.log(error);
     }
   },
+
+
+  getproductdetails: async (req, res) => {
+    try {
+      if (req.session.log) {
+        res.render('prodect')
+      } else {
+        res.redirect('/login')
+      }
+
+    } catch (error) {
+
+    }
+  }
 };
+
+
