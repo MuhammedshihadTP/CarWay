@@ -28,12 +28,12 @@
         <div class="col-lg-8 col-md-7 col-12">
           <div class="search-bar-top">
             <div class="search-bar">
-              <select>
+              <!-- <select>
                 <option selected="selected">All Category</option>
-                <option>XUV</option>
-                <option></option>
-                <option></option>
-              </select>
+                <option>Luxury car</option>
+                <option> SUV</option>
+                <option>Van</option>
+              </select> -->
               <form>
                 <input name="search" placeholder="Search  Here....." type="search">
                 <button class="btnn"><i class="ti-search"></i></button>
@@ -59,6 +59,8 @@
                           <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                          
                       </div> -->
+
+            <% if(user) {%>
             <div class="sinlge-bar">
               <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
             </div>
@@ -94,6 +96,9 @@
               </div>
               <!--/ End Shopping Item -->
             </div>
+            <% } %>
+
+
           </div>
         </div>
       </div>
@@ -125,13 +130,13 @@
                   <div class="nav-inner">
                     <ul class="nav main-menu menu navbar-nav">
                       <li class="active"><a href="#">Home</a></li>
-                      <li><a href="#">Product</a></li>
+
 
                       <li><a href="#">Category<i class="ti-angle-down"></i></span></a>
                         <ul class="dropdown">
-                          <li><a href="shop-grid.html">XUV</a></li>
-                          <li><a href="cart.html">XUV</a></li>
-                          <li><a href="checkout.html">XUV</a></li>
+                          <li><a href="shop-grid.html">Van</a></li>
+                          <li><a href="cart.html">Luxury car</a></li>
+                          <li><a href="checkout.html">SUV</a></li>
 
                         </ul>
                       </li>

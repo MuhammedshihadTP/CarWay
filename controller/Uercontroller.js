@@ -5,6 +5,8 @@ const { exists, rawListeners } = require("../models/UserModel");
 const session = require("express-session");
 const { render } = require("ejs");
 const transporter = require("../mail/transporter");
+const { default: mongoose } = require("mongoose");
+const prodect =require("../models/prodect")
 
 module.exports = {
   home: async (req, res) => {
@@ -67,9 +69,9 @@ module.exports = {
             token +
             "</h1>",
         });
+        req.session.signup.Token = token;
+        res.render("otp");
       }
-      req.session.signup.Token = token
-      res.render("otp");
     } catch (error) { }
   },
 
@@ -83,15 +85,15 @@ module.exports = {
         console.log(password, "heloooo");
         bcrypt.hash(password, 10).then((hashedPassword) => {
           password = hashedPassword;
-          console.log(password,"hai");
+          console.log(password, "hai");
           const newUser = new usersignup({ name, email, password, username });
-          console.log(newUser);
+          console.log(newUser, "hlooooooo");
           newUser.save();
-        }); 
+        });
 
         res.redirect("/login");
       } else {
-        res.redirect("/otpverification");
+        res.redirect("/otp");
       }
     } catch (error) {
       console.log(error);
@@ -110,7 +112,7 @@ module.exports = {
 
   postlogin: async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body,"helllo");
+    console.log(req.body, "helllo");
     const user = await Usermodel.findOne({ email: email });
     if (!user) {
       res.status(401).json({ msg: "user not founded" });
@@ -136,19 +138,21 @@ module.exports = {
     }
   },
 
-
   getproductdetails: async (req, res) => {
     try {
       if (req.session.log) {
-        res.render('prodect')
+        let prodects = await prodect.find()
+        console.log(prodects,'hiptodet');
+        res.render("prodect");
+
       } else {
-        res.redirect('/login')
+        res.redirect("/login");
       }
-
     } catch (error) {
-
+      console.log(error);
     }
-  }
+  },
+
 };
 
 
