@@ -16,7 +16,8 @@
             <!-- Search Form -->
             <div class="search-top">
               <form class="search-form">
-                <input type="text" placeholder="Search here..." name="search">
+                <input type="text" placeholder="Search here...">
+
                 <button value="search" type="submit"><i class="ti-search"></i></button>
               </form>
             </div>
@@ -34,8 +35,12 @@
                 <option> SUV</option>
                 <option>Van</option>
               </select> -->
-              <form>
-                <input name="search" placeholder="Search  Here....." type="search">
+              <form method="post" action="/search">
+                <input name="search" placeholder="Search  Here....." type="search" id="search">
+                <div class="autosearch" id="output"
+                  style=" display: none;  background-color: white; overflow: auto; height: 17vh; width: 100%; z-index: 2; position: relative;">
+
+                </div>
                 <button class="btnn"><i class="ti-search"></i></button>
 
               </form>
@@ -48,10 +53,14 @@
             <div class="sinlge-bar" style="margin-bottom: 10px;">
 
               <% if(user) {%>
-              <a href="/logout" class="single-icon btn" style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i class="ti-power-off"></i>logout</a>
-              <% }else{ %>
-              <a href="/login" class="single-icon btn" style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i class="ti-power-off"></i>login</a>
-              <% } %>
+                <a href="/logout" class="single-icon btn"
+                  style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i
+                    class="ti-power-off"></i>logout</a>
+                <% }else{ %>
+                  <a href="/login" class="single-icon btn"
+                    style="padding-bottom: 3px; height: 40px; color: aliceblue;  font-size: smaller; font-weight: 100; text-align: center; border-radius: 10px;"><i
+                      class="ti-power-off"></i>login</a>
+                  <% } %>
             </div>
 
 
@@ -61,42 +70,42 @@
                       </div> -->
 
             <% if(user) {%>
-            <div class="sinlge-bar">
-              <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-            </div>
-            <div class="sinlge-bar shopping">
-              <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
-              <!-- Shopping Item -->
-              <div class="shopping-item">
-                <div class="dropdown-cart-header">
-                  <span>2 Items</span>
-                  <a href="#">View Cart</a>
-                </div>
-                <ul class="shopping-list">
-                  <li>
-                    <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                    <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                    <h4><a href="#">Woman Ring</a></h4>
-                    <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                  </li>
-                  <li>
-                    <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                    <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                    <h4><a href="#">Woman Necklace</a></h4>
-                    <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                  </li>
-                </ul>
-                <div class="bottom">
-                  <div class="total">
-                    <span>Total</span>
-                    <span class="total-amount">$134.00</span>
-                  </div>
-                  <a href="checkout.html" class="btn animate">Checkout</a>
-                </div>
+              <div class="sinlge-bar">
+                <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
               </div>
-              <!--/ End Shopping Item -->
-            </div>
-            <% } %>
+              <div class="sinlge-bar shopping">
+                <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+                <!-- Shopping Item -->
+                <div class="shopping-item">
+                  <div class="dropdown-cart-header">
+                    <span>2 Items</span>
+                    <a href="#">View Cart</a>
+                  </div>
+                  <ul class="shopping-list">
+                    <li>
+                      <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                      <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
+                      <h4><a href="#">Woman Ring</a></h4>
+                      <p class="quantity">1x - <span class="amount">$99.00</span></p>
+                    </li>
+                    <li>
+                      <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                      <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
+                      <h4><a href="#">Woman Necklace</a></h4>
+                      <p class="quantity">1x - <span class="amount">$35.00</span></p>
+                    </li>
+                  </ul>
+                  <div class="bottom">
+                    <div class="total">
+                      <span>Total</span>
+                      <span class="total-amount">$134.00</span>
+                    </div>
+                    <a href="checkout.html" class="btn animate">Checkout</a>
+                  </div>
+                </div>
+                <!--/ End Shopping Item -->
+              </div>
+              <% } %>
 
 
           </div>
@@ -165,3 +174,69 @@
   </div>
   <!--/ End Header Inner -->
 </header>
+
+
+<style>
+  .autosearch li {
+
+
+    /* padding: 8px 12px; */
+    width: 100%;
+
+  }
+
+  /* .autosearch{
+   
+  } */
+
+  .autosearch li:hover {
+    background: #F7941D;
+  }
+
+  .autosearch::-webkit-scrollbar {
+    display: none;
+
+  }
+</style>
+
+<script>
+  const searchvalue = document.getElementById('search').value
+
+  document.getElementById('search').addEventListener('input', event => {
+    const query = event.target.value
+    const response = fetch(`http://localhost:3000/search?q=${query}`).then(res => res.json()).then((data) => {
+      console.log(data);
+      data.result.forEach(result => {
+      console.log(result);
+        document.getElementById("output").innerHTML += `<li data-id=${result.id}>${result.name}  </li>`
+      });
+      const collection = document.getElementById("output").children
+      collection.id.forEach(element => {
+        console.log(element);
+
+      });
+
+      
+    }
+    )
+
+
+    if (query.length > 0) {
+      document.getElementById('output').style.display = 'block'
+
+      console.log(query);
+    } else {
+      document.getElementById('output').style.display = "none"
+
+    }
+  });
+
+
+
+
+  // const searchinput = document.querySelector("#search");
+  // searchinput, addEventListener("input", event => {
+  //   const query = event.target.value
+  //   const response = fetch(`http://localhost:3000/search?q=${query}`).then(data => data.json({result})).then(data => console.log(data))
+  // });
+</script>

@@ -47,10 +47,15 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "view"));
 app.set("layout", "layout/layout");
 
-const router = require("./routers/userRouter");
+const userrouter = require("./routers/userRouter");
+const adminrouter=require("./routers/adminRouter");
+
 const { url } = require("inspector");
 const { urlencoded } = require("express");
-app.use("/", router);
+
+
+app.use("/", userrouter);
+app.use("/admin",adminrouter);
 
 app.listen(3000, () => {
   console.log("started");

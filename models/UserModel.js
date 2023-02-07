@@ -23,7 +23,7 @@ const userschema = new mongoose.Schema({
   }
 })
 
-const usersignup = mongoose.model('signup', userschema);
+const usersignup = mongoose.model('signup', userschema,'signup');
 module.exports = usersignup;
 
 

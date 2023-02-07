@@ -10,7 +10,7 @@ const prodectschema = new mongoose.Schema({
  
 })
 
-const prodect= mongoose.model('prodect', prodectschema);
+const prodect= mongoose.model('prodects', prodectschema,'prodects');
 module.exports = prodect;
 
 

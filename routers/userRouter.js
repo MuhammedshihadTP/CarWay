@@ -12,6 +12,7 @@ const {
   otpverification,
   getotpverification,
   getproductdetails,
+  postsearch,
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -25,6 +26,7 @@ router.get("/login", getlogin);
 router.post("/login", postlogin);
 router.get("/logout",userlogout);
 router.get('/prodect',getproductdetails);
+router.get("/search",postsearch);
 
 
 module.exports = router;

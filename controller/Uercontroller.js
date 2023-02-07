@@ -6,7 +6,8 @@ const session = require("express-session");
 const { render } = require("ejs");
 const transporter = require("../mail/transporter");
 const { default: mongoose } = require("mongoose");
-const prodect =require("../models/prodect")
+const prodect = require("../models/prodect");
+const { query } = require("express");
 
 module.exports = {
   home: async (req, res) => {
@@ -18,7 +19,7 @@ module.exports = {
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.log(error);
+      console.log(error) ;
     }
   },
 
@@ -129,6 +130,7 @@ module.exports = {
     }
   },
 
+
   userlogout: async (req, res) => {
     try {
       req.session.log = null;
@@ -141,10 +143,9 @@ module.exports = {
   getproductdetails: async (req, res) => {
     try {
       if (req.session.log) {
-        let prodects = await prodect.find()
-        console.log(prodects,'hiptodet');
+        let prodects = await prodect.find();
+        console.log(prodects, "hiptodet");
         res.render("prodect");
-
       } else {
         res.redirect("/login");
       }
@@ -153,6 +154,25 @@ module.exports = {
     }
   },
 
+
+
+  postsearch: async (req, res) => {
+    try {
+      // const result = req.query.q;
+      // console.log(result);
+
+      const agg = [
+        { $search: { autocomplete: { query: req.query.q, path: "name" } } },
+        { $limit: 10 },
+        { $project: { name: 1 } },
+      ];
+
+      const result = await prodect.aggregate(agg);
+      console.log(result);
+      res.json({result});
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
-
-
