@@ -1,0 +1,67 @@
+<%- include('../partials/adminheader.ejs') %> 
+
+
+<div class="row">
+          
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" action="admin/Vehicles" method="post">
+            <div class="form-group">
+              <label for="exampleInputName1">Car Name</label>
+              <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail3">Rc Number</label>
+              <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Rc Number" name="Rcnumber" name="rcnumber">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword4">Model</label>
+              <input type="text" class="form-control" id="exampleInputPassword4" placeholder="Model" name="model">
+            </div>
+            <!-- <div class="form-group">
+              <label for="exampleSelectGender"></label>
+              <select class="form-control" id="exampleSelectGender">
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div> -->
+            <div class="form-group">
+              <label>File upload</label>
+              <input type="file" name="img[]" class="file-upload-default">
+              <div class="input-group col-xs-12">
+                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" name="image">
+                <span class="input-group-append">
+                  <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputCity1">City</label>
+              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location" name="location">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputCity1">Price</label>
+              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Price" name="price">
+            </div>
+            <div class="form-group">
+              <label for="exampleTextarea1">More Detailes</label>
+              <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button class="btn btn-dark">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var el = document.getElementById("wrapper");
+    var toggleButton = document.getElementById("menu-toggle");
+
+    toggleButton.onclick = function () {
+        el.classList.toggle("toggled");
+    };
+</script>

@@ -15,7 +15,7 @@ module.exports = {
       const userid = req.session.log;
       await Usermodel.findOne({ _id: userid })
         .then((user) => {
-          res.render("home", { user });
+          res.render("user/home", { user });
         })
         .catch((error) => console.log(error));
     } catch (error) {
@@ -24,7 +24,7 @@ module.exports = {
   },
 
   getsignup: (req, res) => {
-    res.render("signup");
+    res.render("user/signup");
   },
 
   postsignup: async (req, res) => {
@@ -48,7 +48,7 @@ module.exports = {
             token +
             "</h1>",
         }),
-          res.render("otp");
+          res.render("user/otp");
       }
     } catch (error) {
       console.log(error);
@@ -71,7 +71,7 @@ module.exports = {
             "</h1>",
         });
         req.session.signup.Token = token;
-        res.render("otp");
+        res.render("user/otp");
       }
     } catch (error) { }
   },
@@ -106,7 +106,7 @@ module.exports = {
       res.redirect("/login");
     } else {
       const error = req.session.loginerr;
-      res.render("login");
+      res.render("user/login");
       console.log(error);
     }
   },
@@ -145,7 +145,7 @@ module.exports = {
       if (req.session.log) {
         let prodects = await prodect.find();
         console.log(prodects, "hiptodet");
-        res.render("prodect");
+        res.render("user/prodect");
       } else {
         res.redirect("/login");
       }
