@@ -6,27 +6,28 @@
     <div class="col-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <form class="forms-sample" action="/admin/vehicles" method="post" enctype="multipart/form-data">
+          <form class="forms-sample" action="/admin/vehicles/<%=vehiclesData._id %>" method="post " enctype="multipart/form-data">
             <div class="form-group">
               <label for="exampleInputName1">Car Name</label>
-              <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name">
+              <input type="text" class="form-control" id="exampleInputName1" name="name" value="<%= vehiclesData.name %>">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail3">Rc Number</label>
-              <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Rc Number" name="Rcnumber" name="rcnumber">
+              <input type="number" class="form-control" id="exampleInputEmail3" value="<%=vehiclesData.Rcnumber %>" name="Rcnumber" name="rcnumber">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword4">Model</label>
-              <input type="text" class="form-control" id="exampleInputPassword4" placeholder="Model" name="model">
+              <input type="text" class="form-control" id="exampleInputPassword4" value="<%= vehiclesData.modelname  %>" name="model">
             </div>
-            <!-- <div class="form-group">
-              <label for="exampleSelectGender"></label>
-              <select class="form-control" id="exampleSelectGender">
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div> -->
+         
+          <div class="bg-image hover-zoom ripple rounded ripple-surface">
+            <img src=" ../images/<%=vehiclesData.image%>"
+              class="w-100" />
+          
+          </div>
+            
             <div class="form-group">
+            
               <label>File upload</label>
               <input type="file" name="image" class="file-upload-default">
               <div class="input-group col-xs-12">
@@ -38,17 +39,17 @@
             </div>
             <div class="form-group">
               <label for="exampleInputCity1">City</label>
-              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location" name="location">
+              <input type="text" class="form-control" id="exampleInputCity1" value="<%= vehiclesData.location %>" name="location">
             </div>
             <div class="form-group">
               <label for="exampleInputCity1">Price</label>
-              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Price" name="price">
+              <input type="text" class="form-control" id="exampleInputCity1" value="<%=vehiclesData.price %>" name="price">
             </div>
             <div class="form-group">
               <label for="exampleTextarea1">More Detailes</label>
-              <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis"></textarea>
+              <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis" value="<%=vehiclesData.moredetails  %>"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
             <button class="btn btn-dark">Cancel</button>
           </form>
         </div>
@@ -57,7 +58,7 @@
 
   </div>
 
-  <script>
+<script>
     var el = document.getElementById("wrapper");
     var toggleButton = document.getElementById("menu-toggle");
 

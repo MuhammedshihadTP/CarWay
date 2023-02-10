@@ -6,7 +6,7 @@ const vehiclesschma = new mongoose.Schema({
   },
   Rcnumber: {
     type: String,
-    required: true,
+    
   },
   modelname: {
     type: String,
@@ -14,7 +14,6 @@ const vehiclesschma = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   location: {
     type: String,
