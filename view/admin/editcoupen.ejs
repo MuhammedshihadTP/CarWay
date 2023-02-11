@@ -1,0 +1,83 @@
+<%- include('../partials/adminheader.ejs') %> 
+
+<div class="container " >
+    <div class="row g-4">
+        <div class="  col-xl-2">
+
+        </div>
+      
+        <div class="col-sm-12  col-xl-6">
+          
+        <div class="card">
+                <div class="card-body" >
+                    <h4 class="card-title">Add Coupon</h4>
+                    <p class="card-description">add discount coupens for products</p>
+                    <form class="forms-sample" action="/admin/addcoupen/<%= result.id %>" method="post">
+                        <div class="form-group">
+                            <label for="">CODE</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="exampleInputName1"
+                               value="<%= result.code %>"
+                                name="code"
+                            />
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Available</label>
+
+                            <div class="input-group col-xs-12">
+                                <input
+                                    class="form-control file-upload-info"
+                                  value="<%=result.Available %>"
+                                    type="number"
+                                    id="availability"
+                                    name="Available"                                    
+                                />
+                                <!-- <span class="input-group-append"> -->
+                                    <!-- <button class="file-upload-browse btn btn-primary" type="button">Upload</button> -->
+                                <!-- </span> -->
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="exampleTextarea1">status</label>
+                            <input
+                                class="form-control"
+                                id="exampleTextarea1"                               
+                              value="<%= result.Status %>"  name="Status"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">amount</label>
+                            <input  class="form-control" type="text" id="amount" name="amount">
+                        </div>
+                        <div>
+                            
+                        </div><br>
+                        <div class="form-group">
+                            <label for="maxredeem"> maxDiscountAmount</label>
+                            <input class="form-control" type="number" name="maxDiscountAmount" value="<%= result.maxDiscountAmount %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="minimumcartamount">Minimum Cart Amount</label>
+                            <input class="form-control" type="text" name="minCartAmount" value="<%= result.minCartAmount %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="exp date">exp date</label>
+                            <input class="form-control" type="date" name="expireAfter"   value="<%= result.expireAfter %>">                           
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2"> ADD COUPEN </button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+
+                <!-- <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                    </div>
+                </div> -->
+        
+        </div>
+    </div>
+</div>
+</div>

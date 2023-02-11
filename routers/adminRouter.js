@@ -13,7 +13,14 @@ const {
   editvehcilelist,
   posteditvehicles,
   getdashbord,
-  deletevehicless
+  deletevehicless,
+  getCoupens,
+  getaddcoupen,
+  postcoupen,
+  geteditcoupen,
+  postupdatecoupen,
+  delcoupen,
+  getuser
 } = require("../controller/admincontroller");
 const addmincontroller = require("../controller/admincontroller");
 const { postlogin } = require("../controller/Uercontroller");
@@ -32,5 +39,11 @@ router.get("/viewvehicles", viwevehcilelist);
 router.get("/vehicles/:id", editvehcilelist);
 router.post("/vehicles/:id",posteditvehicles);
 router.get("/vehicless/:id",deletevehicless);
-
+router.get("/coupen",getCoupens);
+router.get("/addcoupen",getaddcoupen);
+router.post("/addcoupen",postcoupen);
+router.get("/addcoupen/:id",geteditcoupen);
+router.post("/addcoupen/:id",postupdatecoupen);
+router.get("/coupen/:id",delcoupen);
+router.get('/users',getuser)
 module.exports = router;

@@ -4,6 +4,8 @@ const adminsignup = require("../models/adminmodel");
 const vehiclesmodel = require("../models/vehicles");
 const { post } = require("../routers/adminRouter");
 const { render } = require("ejs");
+const coupenmodel = require("../models/coupenmodel.js");
+const usermodel = require("../models/UserModel");
 
 module.exports = {
   adminhome: async (req, res) => {
@@ -188,16 +190,105 @@ module.exports = {
     }
   },
 
-  deletevehicless:async(req,res)=>{
+  deletevehicless: async (req, res) => {
     try {
-      const id=req.params.id;
-      await vehiclesmodel.deleteOne({_id:id}).then(result=>{
+      const id = req.params.id;
+      await vehiclesmodel.deleteOne({ _id: id }).then((result) => {
         console.log(result);
-        res.redirect('/admin');
-      })
-    } catch (error) {
-      
-    }
+        res.redirect("/admin");
+      });
+    } catch (error) {}
+  },
 
-  }
+  getCoupens: async (req, res) => {
+    const adminid = req.session.admin;
+    await coupenmodel.find().then((result) => {
+      if (adminid) {
+        res.render("admin/coupen", { result });
+      } else {
+        res.redirect("/admin/login");
+      }
+    });
+  },
+
+  getaddcoupen: async (req, res) => {
+    try {
+      res.render("admin/addcoupen", { admin: true });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  postcoupen: async (req, res) => {
+    try {
+      const coupen = new coupenmodel(req.body);
+      coupen.save().then((result) => {
+        res.redirect("/admin/coupen", { result });
+        console.log("coupen added");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  geteditcoupen: async (req, res) => {
+    try {
+      const id = req.params.id;
+      await coupenmodel.findOne({ _id: id }).then((result) => {
+        res.render("admin/editcoupen", { result });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  postupdatecoupen: async (req, res) => {
+    try {
+      const id = req.params.id;
+      await coupenmodel
+        .updateOne(
+          { _id: id },
+          {
+            $set: {
+              code: req.body.code,
+              Available: req.body.Available,
+              Status: req.body.Status,
+              amount: req.body.amount,
+              expireAfter: req.body.expireAfter,
+              usageLimit: req.body.usageLimit,
+              minCartAmount: req.body.minCartAmount,
+              maxDiscountAmount: req.body.maxDiscountAmount,
+            },
+          }
+        )
+        .then((result) => {
+          res.redirect("/admin/coupen");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  delcoupen: async (req, res) => {
+    try {
+      const id = req.params.id;
+      await coupenmodel.deleteOne({ _id: id }).then((result) => {
+        res.redirect("/admin");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getuser: async (req, res) => {
+    try {
+      if (req.session.admin) {
+        await usermodel.find().then((result) => {
+          res.render("admin/useroverview", { result });
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

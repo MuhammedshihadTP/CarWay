@@ -1,0 +1,39 @@
+<%- include('../partials/adminheader.ejs') %>
+
+<div class="row my-5 container">
+  <h3 class="fs-4 mb-3">Availabele coupens</h3>
+  <div class="col">
+    <table class="table bg-white rounded shadow-sm table-hover">
+      <thead>
+        <tr>
+          <!-- <th scope="col" width="50">#</th> -->
+          <th scope="col">coupen code</th>
+          <th scope="col">Available</th>
+          <th scope="col">amount</th>
+          <th scope="col">maxDiscountAmoun</th>
+          <th scope="col">exp dat</th>
+          <th scope="col">Action</th>
+          <th scope="col">
+            <a href="/admin/addcoupen" class="btn btn-success">Add</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%result.forEach(value=>{ %>
+        <tr>
+          <!-- <th scope="row"></th> -->
+          <td><%=value.code %></td>
+          <td>Jonny</td>
+          <td>$1200</td>
+          <td>Jonny</td>
+          <td>$1200</td>
+          <td><a href="/admin/coupen/<%=value._id  %>" class="btn btn-danger" >DELETE</a></td>
+          <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn btn-success">EDIT</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
