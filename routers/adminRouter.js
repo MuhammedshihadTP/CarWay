@@ -20,7 +20,9 @@ const {
   geteditcoupen,
   postupdatecoupen,
   delcoupen,
-  getuser
+  getuser,
+  blockuser,
+  unblockuser
 } = require("../controller/admincontroller");
 const addmincontroller = require("../controller/admincontroller");
 const { postlogin } = require("../controller/Uercontroller");
@@ -45,5 +47,7 @@ router.post("/addcoupen",postcoupen);
 router.get("/addcoupen/:id",geteditcoupen);
 router.post("/addcoupen/:id",postupdatecoupen);
 router.get("/coupen/:id",delcoupen);
-router.get('/users',getuser)
+router.get('/users',getuser);
+router.get("/Users/:id",blockuser);
+router.get("/user/:id",unblockuser);
 module.exports = router;

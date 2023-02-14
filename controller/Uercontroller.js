@@ -8,18 +8,19 @@ const transporter = require("../mail/transporter");
 const { default: mongoose } = require("mongoose");
 const prodect = require("../models/prodect");
 const { query } = require("express");
+const vehiclesmodel = require("../models/vehicles");
+const { use } = require("../mail/transporter");
 
 module.exports = {
   home: async (req, res) => {
     try {
       const userid = req.session.log;
-      await Usermodel.findOne({ _id: userid })
-        .then((user) => {
-          res.render("user/home", { user });
-        })
-        .catch((error) => console.log(error));
+      const vehicles = await vehiclesmodel.find();
+      await Usermodel.findOne({ _id: userid }).then((user) => {
+        res.render("user/home", { user, vehicles });
+      });
     } catch (error) {
-      console.log(error) ;
+      console.log(error);
     }
   },
 
@@ -73,7 +74,7 @@ module.exports = {
         req.session.signup.Token = token;
         res.render("user/otp");
       }
-    } catch (error) { }
+    } catch (error) {}
   },
 
   otpverification: async (req, res) => {
@@ -118,7 +119,7 @@ module.exports = {
     if (!user) {
       res.status(401).json({ msg: "user not founded" });
     }
-    if (user) {
+    if (user && user.block) {
       bcrypt.compare(password, user.password).then((isvalid) => {
         if (isvalid) {
           req.session.log = user;
@@ -127,9 +128,10 @@ module.exports = {
           res.redirect("/login");
         }
       });
+    } else {
+      res.json({ msg: "Your is blocked" });
     }
   },
-
 
   userlogout: async (req, res) => {
     try {
@@ -142,10 +144,18 @@ module.exports = {
 
   getproductdetails: async (req, res) => {
     try {
-      if (req.session.log) {
-        let prodects = await prodect.find();
+      const id = req.params.id;
+      console.log(id);
+
+      const user = req.session.log;
+
+      if (user) {
+        console.log(id, "--------dddddd----");
+
+        let prodects = await vehiclesmodel.findById({ _id: id });
+
         console.log(prodects, "hiptodet");
-        res.render("user/prodect");
+        res.render("user/prodect", { prodects, user });
       } else {
         res.redirect("/login");
       }
@@ -153,8 +163,6 @@ module.exports = {
       console.log(error);
     }
   },
-
-
 
   postsearch: async (req, res) => {
     try {
@@ -169,10 +177,29 @@ module.exports = {
 
       const result = await prodect.aggregate(agg);
       console.log(result);
-      res.json({result});
-
+      res.json({ result });
     } catch (error) {
       console.log(error);
     }
+  },
+
+  getbookingform: async (req, res) => {
+    try {
+      const id = req.params.id;
+      console.log(id);
+      const user = req.session.log;
+      if (req.session.log) {
+        await vehiclesmodel.findOne({ _id: id }).then((result) => {
+          console.log(result);
+          res.render("user/checkout", { result, user });
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postbooking: async (req, res) => {
+    try {
+    } catch (error) {}
   },
 };

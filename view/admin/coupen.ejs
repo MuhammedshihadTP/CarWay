@@ -9,12 +9,15 @@
           <!-- <th scope="col" width="50">#</th> -->
           <th scope="col">coupen code</th>
           <th scope="col">Available</th>
-          <th scope="col">amount</th>
-          <th scope="col">maxDiscountAmoun</th>
+          <th scope="col">Status</th>
+          <th scope="col">Amount</th>
+          <th scope="col">MinimumCartAmount</th>
+          <th scope="col">DiscountAmount</th>
           <th scope="col">exp dat</th>
+          <th scope="col">usageLimit</th>
           <th scope="col">Action</th>
           <th scope="col">
-            <a href="/admin/addcoupen" class="btn btn-success">Add</a>
+            <a href="/admin/addcoupen" class="btn btn-success" style="color: aliceblue;">Add</a>
           </th>
         </tr>
       </thead>
@@ -23,11 +26,15 @@
         <tr>
           <!-- <th scope="row"></th> -->
           <td><%=value.code %></td>
-          <td>Jonny</td>
-          <td>$1200</td>
-          <td>Jonny</td>
-          <td>$1200</td>
-          <td><a href="/admin/coupen/<%=value._id  %>" class="btn btn-danger" >DELETE</a></td>
+          <td><%=value.Available %></td>
+          <td><%=value.Status %></td>
+          <td><<%=value.amount %></td>
+          <td><%=value.minCartAmount %></td>
+          <td><%=value.maxDsicountAmount %></td>
+          <td><% value.expireAfter %></td>
+          <td><%=value. usageLimit %></td>
+
+          <td><a href="/admin/coupen/<%=value._id  %>" class="btn " style="color: aliceblue;" >DELETE</a></td>
           <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn btn-success">EDIT</a></td>
         </tr>
         <% }) %>

@@ -1,135 +1,132 @@
+<%-include('../partials/heder.ejs') %>
 <section class="shop checkout section">
-    <div class="container">
-        <div class="row"> 
-            <div class="col-lg-8 col-12">
-                <div class="checkout-form">
-                    <h2>Make Your Checkout Here</h2>
-                    <p>Please register in order to checkout more quickly</p>
-                    <!-- Form -->
-                    <form class="form" method="post" action="#">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>First Name<span>*</span></label>
-                                    <input type="text" name="name" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Last Name<span>*</span></label>
-                                    <input type="text" name="name" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Email Address<span>*</span></label>
-                                    <input type="email" name="email" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Phone Number<span>*</span></label>
-                                    <input type="number" name="number" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Country<span>*</span></label>
-                                    <select name="country_name" id="country">
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AX">Åland Islands</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AS">American Samoa</option>
-                                        <option value="AD">Andorra</option>
-                                        <option value="AO">Angola</option>
-                                        <option value="AI">Anguilla</option>
-                                        <option value="AQ">Antarctica</option>
-                                        <option value="AG">Antigua and Barbuda</option>
-                                        <option value="AR">Argentina</option>
-                                        <option value="AM">Armenia</option>
-                                        <option value="AW">Aruba</option>
-                                        <option value="AU">Australia</option>
-                                        <option value="AT">Austria</option>
-                                        <option value="AZ">Azerbaijan</option>
-                                  
-                                    
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>State / Divition<span>*</span></label>
-                                    <select name="state-province" id="state-province">
-                                        <option value="divition" selected="selected">New Yourk</option>
-                                        <option>Los Angeles</option>
-                                        <option>Chicago</option>
-                                        <option>Houston</option>
-                                        <option>San Diego</option>
-                                        <option>Dallas</option>
-                                        <option>Charlotte</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Address Line 1<span>*</span></label>
-                                    <input type="text" name="address" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Licence Number<span>*</span></label>
-                                    <input type="text" name="address" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Postal Code<span>*</span></label>
-                                    <input type="text" name="post" placeholder="" required="required">
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Company<span>*</span></label>
-                                    <select name="company_name" id="company">
-                                        <option value="company" selected="selected">Microsoft</option>
-                                        <option>Apple</option>
-                                        <option>Xaiomi</option>
-                                        <option>Huawer</option>
-                                        <option>Wpthemesgrid</option>
-                                        <option>Samsung</option>
-                                        <option>Motorola</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                            <div class="col-12">
-                                <div class="form-group create-account">
-                                    <input id="cbox" type="checkbox">
-                                    <label>Create an account?</label>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!--/ End Form -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-12">
+        <div class="checkout-form">
+          <h2>Make Your Checkout Here</h2>
+          <p>Please register in order to checkout more quickly</p>
+          <!-- Form -->
+          <form class="form" method="post" action="#">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Full name<span>*</span></label>
+                  <input type="text" name="name" required="required" />
                 </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Email Address<span>*</span></label>
+                  <input type="email" name="email" required="required" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Vehicle Name<span>*</span></label>
+                  <input
+                    type="email"
+                    name="email"
+                    value="<%=result.name %>"
+                    required="required"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Phone Number<span>*</span></label>
+                  <input
+                    type="number"
+                    name="number"
+                    placeholder=""
+                    required="required"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Address <span>*</span></label>
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder=""
+                    required="required"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Licence Number<span>*</span></label>
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder=""
+                    required="required"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Postal Code<span>*</span></label>
+                  <input
+                    type="text"
+                    name="post"
+                    placeholder=""
+                    required="required"
+                  />
+                </div>
+              </div>
+              <h6>BOOKED TIME SLOTES</h6>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>FROM<span>*</span></label>
+
+                  <input
+                    type="datetime-local"
+                    name="starttime"
+                    required="required"
+                    id="start"
+                    onchange="selectTimeslote()"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>To<span>*</span></label>
+
+                  <input
+                    type="datetime-local"
+                    name="endtime"
+                    required="required"
+                    id="end"
+                    onchange="selectTimeslote()"
+                  />
+                </div>
+              </div>
             </div>
-            <div class="col-lg-4 col-12">
-                <div class="order-details">
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                        <h2>CART  TOTALS</h2>
-                        <div class="content">
-                            <ul>
-                                <li>Sub Total<span>$330.00</span></li>
-                                <!-- <li>(+) Shipping<span>$10.00</span></li> -->
-                                <li class="last">Total<span>$340.00</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/ End Order Widget -->
-                    <!-- Order Widget -->
-                    <!-- <div class="single-widget">
+          </form>
+          <!--/ End Form -->
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="order-details">
+          <!-- Order Widget -->
+          <div class="single-widget">
+            <h2>TOTALS</h2>
+            <div class="content">
+              <ul>
+                <li>Hours Rate<span id="price"> <%=result.price %> </span></li>
+                <li>Total hours<span id="totalhours"></span></li>
+                <!-- <li>Sub Total<span>$330.00</span></li> -->
+                <!-- <li>(+) Shipping<span>$10.00</span></li> -->
+                <li class="last">Total<span>$340.00</span></li>
+              </ul>
+            </div>
+          </div>
+          <!--/ End Order Widget -->
+          <!-- Order Widget -->
+          <!-- <div class="single-widget">
                         <h2>Payments</h2>
                         <div class="content">
                             <div class="checkbox">
@@ -139,26 +136,42 @@
                             </div>
                         </div>
                     </div> -->
-                    <!--/ End Order Widget -->
-                    <!-- Payment Method Widget -->
-                    <div class="single-widget payement">
-                        <div class="content">
-                            <img src="images/payment-method.png" alt="#">
-                        </div>
-                    </div>
-                    <!--/ End Payment Method Widget -->
-                    <!-- Button Widget -->
-                    <div class="single-widget get-button">
-                        <div class="content">
-                            <div class="button">
-                                <a href="#" class="btn">proceed to checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ End Button Widget -->
-                </div>
+          <!--/ End Order Widget -->
+          <!-- Payment Method Widget -->
+          <div class="single-widget payement">
+            <div class="content">
+              <img src="/images/payment-method.png" alt="#" />
             </div>
+          </div>
+          <!--/ End Payment Method Widget -->
+          <!-- Button Widget -->
+          <div class="single-widget get-button">
+            <div class="content">
+              <div class="button">
+                <a href="#" class="btn">proceed to checkout</a>
+              </div>
+            </div>
+          </div>
+          <!--/ End Button Widget -->
         </div>
+      </div>
     </div>
+  </div>
 </section>
+<%-include('..  /partials/footer.ejs') %>
 <!--/ End Checkout -->
+<script>
+  function selectTimeslote() {
+    const from = document.getElementById("start");
+    const to = document.getElementById("end");
+
+    const diffrence = new Date(to.value) - new Date(from.value);
+    var hours = diffrence / (1000 * 60 * 60);
+
+    document.getElementById("totalhours").innerHTML = hours;
+
+    console.log(hours);
+    const rupee = document.getElementById("price").innerText;
+    console.log(rupee);
+  }
+</script>

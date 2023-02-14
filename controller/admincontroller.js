@@ -17,7 +17,7 @@ module.exports = {
       } else {
         res.redirect("/admin/signup");
       }
-    } catch (error) {}
+    } catch (error) { }
   },
   getadminsignup: (req, res) => {
     res.render("admin/adminsignup");
@@ -97,7 +97,7 @@ module.exports = {
       } else {
         res.redirect("/admin/login");
       }
-    } catch (error) {}
+    } catch (error) { }
   },
 
   getaddvehcles: async (req, res) => {
@@ -146,7 +146,7 @@ module.exports = {
           res.redirect("/admin/login");
         }
       });
-    } catch (error) {}
+    } catch (error) { }
   },
 
   editvehcilelist: async (req, res) => {
@@ -197,7 +197,7 @@ module.exports = {
         console.log(result);
         res.redirect("/admin");
       });
-    } catch (error) {}
+    } catch (error) { }
   },
 
   getCoupens: async (req, res) => {
@@ -223,7 +223,7 @@ module.exports = {
     try {
       const coupen = new coupenmodel(req.body);
       coupen.save().then((result) => {
-        res.redirect("/admin/coupen", { result });
+        res.redirect({ result }, "/admin/coupen");
         console.log("coupen added");
       });
     } catch (error) {
@@ -273,7 +273,7 @@ module.exports = {
     try {
       const id = req.params.id;
       await coupenmodel.deleteOne({ _id: id }).then((result) => {
-        res.redirect("/admin");
+        res.redirect("/admin/coupen");
       });
     } catch (error) {
       console.log(error);
@@ -291,4 +291,27 @@ module.exports = {
       console.log(error);
     }
   },
+
+  blockuser: async (req, res) => {
+    try {
+      const id1 = req.params.id;
+      console.log(id1);
+      await usermodel.findByIdAndUpdate(id1, { block: false })
+      res.redirect("/admin/users");
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  unblockuser: async (req, res) => {
+    try {
+      const id2 = req.params.id;
+      await usermodel.findByIdAndUpdate(id2, { block: true });
+      res.redirect("/admin/users");
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

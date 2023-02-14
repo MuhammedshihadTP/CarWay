@@ -1165,11 +1165,12 @@ Version:1.0
 .hero-slider {
 	background: #fff;
 	overflow: hidden;
+	
 }
 .hero-slider .single-slider {
 	height: auto;
 	background-image: url('/images/COVERPIC.jpg');
-	
+
 
 	
 	background-size: cover;
@@ -3479,7 +3480,7 @@ Version:1.0
 	color:#F7941D;
 }
 /* Copyright */
-footer .copyright .inner{
+.footer .copyright .inner{
 	border-top:1px solid #eeeeee3d;
 	padding:20px 0;
 }
