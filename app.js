@@ -9,6 +9,8 @@ const session = require("express-session");
 const nocach=require('nocache');
 const multer=require('multer');
 const fs=require('fs')
+const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 // const ejslint=require('ejs-lint')
 require('dotenv').config()
 
@@ -66,7 +68,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "view"));
 app.set("layout", "layout/layout")
 app.use(multer({storage:fileStorage,fileFilter:fileFilter}).single("image"))
-
+app.use(express.json())
 const userrouter = require("./routers/userRouter");
 const adminrouter=require("./routers/adminRouter");
 
@@ -77,6 +79,6 @@ const { urlencoded } = require("express");
 app.use("/", userrouter);
 app.use("/admin",adminrouter);
 
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("started");
 });

@@ -1,38 +1,47 @@
 const mongoose = require("mongoose");
-const usersignup = require("./UserModel");
 
-const bookingschma= new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-      },
-      
-  email: {
+
+const bookingschma = new mongoose.Schema({
+  name: {
     type: String,
     required: true,
   },
 
-  number:{
-    type:Number,
-    required:true
+  email: {
+    type: String,
+    required: true,
   },
-  address:{
-    type:String,
-    required:true
+  vehiclename: {
+    type: String,
+    required: true
   },
-  licn:{
-    type:Number,
-    required:true
+
+  number: {
+    type: Number,
+    required: true
   },
-  post:{
-    type:Number,
-    required:true
+  address: {
+    type: String,
+    required: true
   },
-  daysnumber:{
-    type:Number,
-    required:true
-  }
+  licn: {
+    type: Number,
+    required: true
+  },
+  post: {
+    type: Number,
+    required: true
+  },
+  starttime: {
+    type: String,
+    required: true
+  },
+  endtime: {
+    type: String,
+    required: true
+  },
+ 
 })
 
-const booking= mongoose.model('booking',bookingschma);
-module.exports=usersignup;
+const booking = mongoose.model('booking', bookingschma,"booking");
+module.exports = booking

@@ -14,6 +14,8 @@ const {
   getproductdetails,
   postsearch,
   getbookingform,
+  postbooking,
+  postpayment,
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -29,6 +31,8 @@ router.get("/logout",userlogout);
 router.get('/prodect/:id',getproductdetails);
 router.get("/search",postsearch);
 router.get("/booking/:id",getbookingform);
+router.post("/Bookings",postbooking)
+// router.post("/payment",postpayment)
 
 
 module.exports = router;

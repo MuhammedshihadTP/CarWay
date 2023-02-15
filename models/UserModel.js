@@ -25,26 +25,7 @@ const userschema = new mongoose.Schema({
     type: Boolean,
     default:true,
   },
-  number:{
-    type:Number,
-    required:true
-  },
-  address:{
-    type:String,
-    required:true
-  },
-  licn:{
-    type:Number,
-    required:true
-  },
-  post:{
-    type:Number,
-    required:true
-  },
-  daysnumber:{
-    type:Number,
-    required:true
-  }
+
 
 });
 

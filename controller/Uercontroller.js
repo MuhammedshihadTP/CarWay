@@ -10,6 +10,8 @@ const prodect = require("../models/prodect");
 const { query } = require("express");
 const vehiclesmodel = require("../models/vehicles");
 const { use } = require("../mail/transporter");
+const booking = require("../models/bookingModel");
+const { default: Stripe } = require("stripe");
 
 module.exports = {
   home: async (req, res) => {
@@ -200,6 +202,41 @@ module.exports = {
   },
   postbooking: async (req, res) => {
     try {
+      const {
+        name,
+        email,
+        number,
+        address,
+        licn,
+        post,
+        starttime,
+        endtime,
+        vehiclename,
+      } = req.body;
+      console.log(req.body);
+      const bookings = new booking(req.body);
+      await bookings.save();
     } catch (error) {}
   },
+
+  // postpayment: async (req, res) => {
+  //   const { vehicles } = req.body;
+  //   const session = await Stripe.Checkout.session.create({
+  //     payment_method_types: ["card"],
+  //     line_items: [
+  //       {
+  //         price_data: {
+  //           currency: "inr",
+  //           vehicle_data: {
+  //             name: vehicles.name,
+  //             amount:vehicles.amount
+
+  //           },
+  //         },
+  //       },
+  //     ],
+  //     mode: "payment",
+  //   });
+  //   res.json({ id: session.id });
+  // },
 };
