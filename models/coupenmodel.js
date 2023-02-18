@@ -27,10 +27,11 @@ const coupenschema= new  mongoose.Schema({
       minCartAmount: {
         type: Number
       },
-      maxDiscountAmount: {
-        type: Number
-      }
+      // maxDiscountAmount: {
+      //   type: Number
+      // }
 });
 
 const coupen=mongoose.model("coupen",coupenschema,"coupen");
-module.exports=coupen
+module.exports=coupen;
+

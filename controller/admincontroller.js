@@ -7,6 +7,7 @@ const { render } = require("ejs");
 const coupenmodel = require("../models/coupenmodel.js");
 const usermodel = require("../models/UserModel");
 const bookingModel = require("../models/bookingModel");
+const { modelName } = require("../models/UserModel");
 
 module.exports = {
   adminhome: async (req, res) => {
@@ -273,7 +274,7 @@ module.exports = {
               expireAfter: req.body.expireAfter,
               usageLimit: req.body.usageLimit,
               minCartAmount: req.body.minCartAmount,
-              maxDiscountAmount: req.body.maxDiscountAmount,
+              // maxDiscountAmount: req.body.maxDiscountAmount,
             },
           }
         )
