@@ -2,40 +2,40 @@
 <body>
   <%- include('../partials/adminheader.ejs') %> 
 
-          <div class="container-fluid px-4">
+          <div class="container-fluid px-4" style="color: black;">
               <div class="row g-3 my-2">
                   <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
-                              <h3 class="fs-2">720</h3>
-                              <p class="fs-5">Products</p>
+                              <h3 class="fs-2"><%=allusers%></h3>
+                              <p class="fs-5">Users</p>
                           </div>
-                          <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                          <i class="fas fa-user fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                       </div>
                   </div>
 
                   <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
-                              <h3 class="fs-2">4920</h3>
-                              <p class="fs-5">Sales</p>
+                              <h3 class="fs-2"><%=bookingcount %></h3>
+                              <p class="fs-5">Booking</p>
                           </div>
                           <i
-                              class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                              class="fas fa-cart-plus fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                       </div>
                   </div>
 
                   <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
-                              <h3 class="fs-2">3899</h3>
-                              <p class="fs-5">Delivery</p>
+                              <h3 class="fs-2"><%=vehiclecount%></h3>
+                              <p class="fs-5">Vehicles</p>
                           </div>
-                          <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                          <i class="fas fa-car fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                       </div>
                   </div>
 
-                  <div class="col-md-3">
+                  <!-- <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
                               <h3 class="fs-2">%25</h3>
@@ -43,7 +43,7 @@
                           </div>
                           <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                       </div>
-                  </div>
+                  </div> -->
               </div>
 
               <div class="row my-5">
@@ -142,11 +142,3 @@
 
   </div>
 
-  <script>
-    var el = document.getElementById("wrapper");
-    var toggleButton = document.getElementById("menu-toggle");
-
-    toggleButton.onclick = function () {
-        el.classList.toggle("toggled");
-    };
-</script>

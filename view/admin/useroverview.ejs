@@ -1,49 +1,47 @@
 <%- include('../partials/adminheader.ejs') %>
 
-  <div class="row my-5 container">
-    <h3 class="fs-4 mb-3">Users Over View</h3>
-    <div class="col">
-      <table class="table bg-white rounded shadow-sm table-hover">
-        <thead>
-          <tr>
-            <!-- <th scope="col" width="50">#</th> -->
-            <th scope="col">Name</th>
-            <th scope="col">User name</th>
-            <th scope="col">email</th>
-            <!-- <th scope="col">maxDiscountAmoun</th>
+<div class="row my-5 container">
+  <h3 class="fs-4 mb-3">Users Over View</h3>
+  <div class="col">
+    <table class="table bg-white rounded shadow-sm table-hover">
+      <thead>
+        <tr>
+          <!-- <th scope="col" width="50">#</th> -->
+          <th scope="col">Name</th>
+          <th scope="col">User name</th>
+          <th scope="col">email</th>
+          <!-- <th scope="col">maxDiscountAmoun</th>
             <th scope="col">exp dat</th>
             <th scope="col">Action</th> -->
-            <!-- <th scope="col">
+          <!-- <th scope="col">
               <a href="/admin/addcoupen" class="btn btn-success">Add</a>
             </th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <% result.forEach(value=>{%>
-            <tr>
-              <!-- <th scope="row"></th> -->
-              <td>
-                <%=value.name %>
-              </td>
-              <td>
-                <%= value.username %>
-              </td>
-              <td>
-                <%= value.email %>
-              </td>
-              <!-- <td>Jonny</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% result.forEach(value=>{%>
+        <tr>
+          <!-- <th scope="row"></th> -->
+          <td><%=value.name %></td>
+          <td><%= value.username %></td>
+          <td><%= value.email %></td>
+          <!-- <td>Jonny</td>
             <td>$1200</td> -->
-<td>
-              <% if(value.block){ %>
+          <td>
+            <% if(value.block){ %>
 
-                <a href="/admin/Users/<%=value._id%>" class="btn btn-danger">BLOCK</a>
-                <% }else{ %>
-                  <a href="/admin/user/<%=value._id %>" class="btn btn-success">UNBLOCKING</a>
-                  <% } %>
-                </td>
-            </tr>
-            <% }) %>
-        </tbody>
-      </table>
-    </div>
+            <a href="/admin/Users/<%=value._id%>" class="btn btn-danger"
+              >BLOCK</a
+            >
+            <% }else{ %>
+            <a href="/admin/user/<%=value._id %>" class="btn btn-success"
+              >UNBLOCKING</a
+            >
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
   </div>
+</div>

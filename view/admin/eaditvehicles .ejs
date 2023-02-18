@@ -1,12 +1,11 @@
 <%- include('../partials/adminheader.ejs') %> 
 
 
-<div class="row">
-          
+<div class="row">       
     <div class="col-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <form class="forms-sample" action="/admin/vehicles/<%=vehiclesData._id %>" method="post " enctype="multipart/form-data">
+          <form class="forms-sample" action="/admin/vehicles/<%=vehiclesData._id %>" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label for="exampleInputName1">Car Name</label>
               <input type="text" class="form-control" id="exampleInputName1" name="name" value="<%= vehiclesData.name %>">
@@ -21,13 +20,12 @@
             </div>
          
           <div class="bg-image hover-zoom ripple rounded ripple-surface">
-            <img src=" ../images/<%=vehiclesData.image%>"
+            <img src="../images/<%=vehiclesData.image%>"
               class="w-100" />
-          
+-
           </div>
             
             <div class="form-group">
-            
               <label>File upload</label>
               <input type="file" name="image" class="file-upload-default">
               <div class="input-group col-xs-12">
@@ -55,14 +53,4 @@
         </div>
       </div>
     </div>
-
   </div>
-
-<script>
-    var el = document.getElementById("wrapper");
-    var toggleButton = document.getElementById("menu-toggle");
-
-    toggleButton.onclick = function () {
-        el.classList.toggle("toggled");
-    };
-</script>

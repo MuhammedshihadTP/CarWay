@@ -22,7 +22,8 @@ const {
   delcoupen,
   getuser,
   blockuser,
-  unblockuser
+  unblockuser,
+  bookingdetail
 } = require("../controller/admincontroller");
 const addmincontroller = require("../controller/admincontroller");
 const { postlogin } = require("../controller/Uercontroller");
@@ -50,4 +51,6 @@ router.get("/coupen/:id",delcoupen);
 router.get('/users',getuser);
 router.get("/Users/:id",blockuser);
 router.get("/user/:id",unblockuser);
+router.get("/booking",bookingdetail);
+
 module.exports = router;

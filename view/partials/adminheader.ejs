@@ -17,21 +17,21 @@
         
           <a href="/admin/coupen" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                   class="fas fa-paperclip me-2"></i>Coupens</a>
-          <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                  class="fas fa-shopping-cart me-2"></i>Store Mng</a>
+          <a href="/admin/booking" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                  class="fas fa-shopping-cart me-2"></i>BOOKING DETAILS</a>
        
           <!-- <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                   class="fas fa-comment-dots me-2"></i>Chat</a> -->
-          <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                  class="fas fa-map-marker-alt me-2"></i>Outlet</a>
-          <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
+          <!-- <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                  class="fas fa-map-marker-alt me-2"></i>Outlet</a> -->
+          <a href="/admin/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
                   class="fas fa-power-off me-2"></i>Logout</a>     
       </div>
   </div>
   <!-- /#sidebar-wrapper -->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
+  <div id="page-content-wrapper" style="color: aliceblue;">
       <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
           <div class="d-flex align-items-center">
               <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
@@ -48,8 +48,8 @@
               <ul class="navbar-nav mb-2 mb-lg-0 " style="justify-content: end;">
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                          role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fas fa-user me-2"></i>John Doe
+                          role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: aliceblue;">
+                          <i class="fas fa-user me-2" style="color: aliceblue;"></i>John Doe
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -60,3 +60,12 @@
               </ul>
           </div>
       </nav>
+
+      <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+    
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>

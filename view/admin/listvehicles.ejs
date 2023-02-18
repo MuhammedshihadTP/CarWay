@@ -56,7 +56,8 @@
                 </div>
                 <!-- <h6 class="text-success">Free shipping</h6> -->
                 <div class="d-flex flex-column mt-4">
-                  <a class="btn btn-primary btn-sm" href=" /admin/vehicless/<%=value._id %>" type="submit">DELETE</a>
+                  <!-- <a class="btn btn-primary btn-sm"  href=" /admin/vehicless/" type="submit"  onclick="conform()">DELETE</a> -->
+                  <a class="btn btn-primary btn-sm" type="submit"  onclick="conform('<%=value._id %>')">DELETE</a>
                   <a class="btn btn-primary btn-sm mt-2" type="submit" href="/admin/vehicles/<%=value._id%>">
                     EDIT
                   </a>
@@ -70,3 +71,49 @@
 
   </div>
 </section>
+
+<script>
+  function conform(id){
+    const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You Delete this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location='/admin/vehicless/'+id
+   
+Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Successfuly deleted',
+  showConfirmButton: false,
+  timer: 1500
+
+})
+   
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
+  }
+
+</script>

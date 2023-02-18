@@ -34,7 +34,7 @@
           <td><% value.expireAfter %></td>
           <td><%=value. usageLimit %></td>
 
-          <td><a href="/admin/coupen/<%=value._id  %>" class="btn " style="color: aliceblue;" >DELETE</a></td>
+          <td><a href="/admin/coupen/<%=value._id  %>" class="btn "  id="openmodal" style="color: aliceblue;" >DELETE</a></td>
           <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn btn-success">EDIT</a></td>
         </tr>
         <% }) %>
@@ -43,4 +43,28 @@
   </div>
 </div>
 
+<script>
+
+  function coupendelete(){
+    Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+})
+
+  }
+
+</script>
 

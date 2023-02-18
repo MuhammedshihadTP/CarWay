@@ -1,7 +1,7 @@
 const usersignup = require("../models/UserModel");
 const Usermodel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
-const { exists, rawListeners } = require("../models/UserModel");
+const { exists, rawListeners, find, findOne } = require("../models/UserModel");
 const session = require("express-session");
 const { render } = require("ejs");
 const transporter = require("../mail/transporter");
@@ -11,7 +11,7 @@ const { query } = require("express");
 const vehiclesmodel = require("../models/vehicles");
 const { use } = require("../mail/transporter");
 const booking = require("../models/bookingModel");
-const { default: Stripe } = require("stripe");
+const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
   home: async (req, res) => {
@@ -153,11 +153,13 @@ module.exports = {
 
       if (user) {
         console.log(id, "--------dddddd----");
+        console.log(user);
 
         let prodects = await vehiclesmodel.findById({ _id: id });
+    
 
         console.log(prodects, "hiptodet");
-        res.render("user/prodect", { prodects, user });
+        res.render("user/prodect", { prodects, user});
       } else {
         res.redirect("/login");
       }
@@ -219,24 +221,29 @@ module.exports = {
     } catch (error) {}
   },
 
-  // postpayment: async (req, res) => {
-  //   const { vehicles } = req.body;
-  //   const session = await Stripe.Checkout.session.create({
-  //     payment_method_types: ["card"],
-  //     line_items: [
-  //       {
-  //         price_data: {
-  //           currency: "inr",
-  //           vehicle_data: {
-  //             name: vehicles.name,
-  //             amount:vehicles.amount
-
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     mode: "payment",
-  //   });
-  //   res.json({ id: session.id });
-  // },
+  postpayment: async (req, res) => {
+    const { vehicles } = req.body;
+    console.log(req.body)
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: 'inr',
+            product_data: {
+              name: vehicles.name
+              
+            },
+            unit_amount: parseInt(vehicles.amount + '00'),
+          },
+          quantity: 1
+        }
+      ],
+      mode: "payment",
+      success_url: `${process.env.APP_URL}/Sucssus.ejs`,
+      cancel_url: `${process.env.APP_URL}/failed.ejs`,
+    });
+    console.log(session);
+    res.json({ id: session.id });
+  },
 };

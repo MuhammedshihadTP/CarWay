@@ -32,7 +32,7 @@ router.get('/prodect/:id',getproductdetails);
 router.get("/search",postsearch);
 router.get("/booking/:id",getbookingform);
 router.post("/Bookings",postbooking)
-// router.post("/payment",postpayment)
+router.post("/payment",postpayment)
 
 
 module.exports = router;

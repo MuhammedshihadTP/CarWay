@@ -7,7 +7,7 @@
           <h2>Make Your Checkout Here</h2>
           <p>Please register in order to checkout more quickly</p>
           <!-- Form -->
-          <form class="form" method="post" action="/Bookings" >
+          <form class="form" method="post" action="/Bookings">
             <div class="row">
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
@@ -25,57 +25,31 @@
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Vehicle Name<span>*</span></label>
-                  <input
-                    type="text"
-                    name="vehiclename"
-                    id="vehiclename"
-                    value="<%=result.name %>"
-                    required="required"
-                  />
+                  <input type="text" name="vehiclename" id="vehiclename" value="<%=result.name %>" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Phone Number<span>*</span></label>
-                  <input
-                    type="number"
-                    name="number"
-                    placeholder=""
-                    required="required"
-                  />
+                  <input type="number" name="number" placeholder="" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Address <span>*</span></label>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder=""
-                    required="required"
-                  />
+                  <input type="text" name="address" placeholder="" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Licence Number<span>*</span></label>
-                  <input
-                    type="text"
-                    name="licn"
-                    placeholder=""
-                    required="required"
-                  />
+                  <input type="text" name="licn" placeholder="" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Postal Code<span>*</span></label>
-                  <input
-                    type="text"
-                    name="post"
-                    placeholder=""
-                    required="required"
-                  />
+                  <input type="text" name="post" placeholder="" required="required" />
                 </div>
               </div>
               <h6>BOOKED TIME SLOTES</h6>
@@ -83,26 +57,14 @@
                 <div class="form-group">
                   <label>FROM<span>*</span></label>
 
-                  <input
-                    type="datetime-local"
-                    name="starttime"
-                    required="required"
-                    id="start"
-                    onchange="selectTimeslote()"
-                  />
+                  <input type="datetime-local" name="starttime" required="required" id="start" onchange="selectTimeslote()" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>To<span>*</span></label>
 
-                  <input
-                    type="datetime-local"
-                    name="endtime"
-                    required="required"
-                    id="end"
-                    onchange="selectTimeslote()"
-                  />
+                  <input type="datetime-local" name="endtime" required="required" id="end" onchange="selectTimeslote()" />
                 </div>
               </div>
               <!-- <div class="col-lg-6 col-md-6 col-12">
@@ -111,46 +73,49 @@
                   <button href="" class="btn ml-4">Cancel</button>
                 </div> -->
 
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="order-details">
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                      <h2>TOTALS</h2>
-                      <div class="content">
-                        <ul>
-                          <li>Hours Rate<span id="price"> <%=result.price %> </span></li>
-                          <li>Total hours<span id="totalhours"></span></li>
-                       
-                          <li class="last">Total<span id="totale"></span></li>
-                        </ul>
-                      </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="order-details">
+                  <!-- Order Widget -->
+                  <div class="single-widget">
+                    <h2>TOTALS</h2>
+                    <div class="content">
+                      <ul>
+                        <li>Hours Rate<span id="price">
+                            <%=result.price %>
+                          </span></li>
+                        <li>Total hours<span id="totalhours"></span></li>
+
+                        <li class="last">Total<span id="totale"></span></li>
+                      </ul>
                     </div>
-                  
-                    <div class="single-widget payement">
-                      <div class="content">
-                        <img src="/images/payment-method.png" alt="#" />
-                      </div>
-                    </div>
-                    <!--/ End Payment Method Widget -->
-                    <!-- Button Widget -->
-                    <div class="single-widget get-button">
-                      <div class="content">
-                        <div class="button">
-                        <a href="/payment" ><button type="submit" id="checkout" class="btn">proceed to checkout</button></a>  
-                        </div>
-                      </div>
-                    </div>
-                    <!--/ End Button Widget -->
                   </div>
+
+                  <div class="single-widget payement">
+                    <div class="content">
+                      <img src="/images/payment-method.png" alt="#" />
+                    </div>
+                  </div>
+                  <!--/ End Payment Method Widget -->
+                  <!-- Button Widget -->
+                  <div class="single-widget get-button">
+                    <div class="content">
+                      <div class="button">
+                        <a href="/payment"><button type="submit" id="checkout" class="btn">proceed to
+                            checkout</button></a>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ End Button Widget -->
                 </div>
               </div>
             </div>
-          </form>
-          <!--/ End Form -->
         </div>
+        </form>
+        <!--/ End Form -->
       </div>
-      
     </div>
+
+  </div>
   </div>
 </section>
 <%-include('../partials/footer.ejs') %>
@@ -169,57 +134,61 @@
     const rupee = document.getElementById("price").innerText;
     console.log(rupee);
 
-    const total=(hours*rupee)
-    document.getElementById('totale').innerHTML=total
+    const total = (hours * rupee)
+    document.getElementById('totale').innerHTML = total
     console.log(total);
   }
 
-//   function clicked(){
-//     Swal.fire({
-//   title: 'Click The Cheack Out Boutton',
-//   showClass: {
-//     popup: 'animate__animated animate__fadeInDown'
-//   },
-//   hideClass: {
-//     popup: 'animate__animated animate__fadeOutUp'
-//   }
-// })
-//   }
+  //   function clicked(){
+  //     Swal.fire({
+  //   title: 'Click The Cheack Out Boutton',
+  //   showClass: {
+  //     popup: 'animate__animated animate__fadeInDown'
+  //   },
+  //   hideClass: {
+  //     popup: 'animate__animated animate__fadeOutUp'
+  //   }
+  // })
+  //   }
 
-// const buttoun=document.querySelector("#checkout")
-// const name=document.getElementById("vehiclename").value
-//   const rupee = document.getElementById("price").innerText;
-// buttoun.addEventListener('click',()=>{
-//   fetch("http://localhost:3000/payment", {
-//         headers: {'Content-Type': 'application/json'},
-//         method: "POST",
-//         body: JSON.stringify({
-//             "product": {
-//                 "name": name, 
-//                 "image": "", 
-//                 "amount": rupee,
-//                 // "quantity": 1
-//             }})
-//       })
-//         .then(function (response) {
-//           return response.json();
-//         })
-//         .then(function (session) {
-//           return stripe.redirectToCheckout({ sessionId: session.id });
-//         })
-//         .then(function (result) {
-       
-//           if (result.error) {
-//             alert(result.error.message);
-//           }
-//         })
-//         .catch(function (error) {
-//           console.error("Error:", error);
-//         });
+  const buttoun = document.querySelector("#checkout")
+  buttoun.addEventListener('click', () => {
+  const name = document.getElementById("vehiclename").value;
+  const rupee = document.getElementById("totale").innerText;
+  console.log(name, rupee);
+    fetch("http://localhost:3000/payment", {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          vehicles: {
+            name: name,
+            image: '',
+            amount: parseInt(rupee),
+            // "quantity": 1
+          }
+        })
+      })
+      .then(function(response) {
+        return response.json();
+        
+      })
+      .then(function(session) {
+        return stripe.redirectToCheckout({
+          sessionId: session.id
+        });
+      })
+      .then(function(result) {
+
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function(error) {
+        console.error("Error:", error);
+      });
 
 
-// })
-
-
-
+  })
 </script>

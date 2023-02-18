@@ -6,18 +6,29 @@ const { post } = require("../routers/adminRouter");
 const { render } = require("ejs");
 const coupenmodel = require("../models/coupenmodel.js");
 const usermodel = require("../models/UserModel");
+const bookingModel = require("../models/bookingModel");
 
 module.exports = {
   adminhome: async (req, res) => {
     try {
       const adminid = req.session.admin;
+      const allusers = await usermodel.count();
+      const bookingcount = await bookingModel.count();
+      const vehiclecount = await vehiclesmodel.count();
       const admin = await adminmodel.findOne({ _id: adminid });
       if (admin) {
-        res.render("admin/admindshbord");
+        res.render("admin/admindshbord", {
+         
+          bookingcount,
+          vehiclecount,
+          allusers
+        });
       } else {
         res.redirect("/admin/signup");
       }
-    } catch (error) { }
+    } catch (error) {
+      console.log(error);
+    }
   },
   getadminsignup: (req, res) => {
     res.render("admin/adminsignup");
@@ -91,13 +102,18 @@ module.exports = {
 
   getdashbord: async (req, res) => {
     try {
+      const allusers = await usermodel.count();
+      const bookingcount = await bookingModel.count();
+      const vehiclecount = await vehiclesmodel.count();
       const adminid = req.session.admin;
       if (adminid) {
-        res.render("admin/admindshbord");
+        res.render("admin/admindshbord",{  bookingcount,
+          vehiclecount,
+          allusers});
       } else {
         res.redirect("/admin/login");
       }
-    } catch (error) { }
+    } catch (error) {}
   },
 
   getaddvehcles: async (req, res) => {
@@ -146,7 +162,7 @@ module.exports = {
           res.redirect("/admin/login");
         }
       });
-    } catch (error) { }
+    } catch (error) {}
   },
 
   editvehcilelist: async (req, res) => {
@@ -195,9 +211,9 @@ module.exports = {
       const id = req.params.id;
       await vehiclesmodel.deleteOne({ _id: id }).then((result) => {
         console.log(result);
-        res.redirect("/admin");
+        res.redirect("/admin" );
       });
-    } catch (error) { }
+    } catch (error) {}
   },
 
   getCoupens: async (req, res) => {
@@ -223,7 +239,7 @@ module.exports = {
     try {
       const coupen = new coupenmodel(req.body);
       coupen.save().then((result) => {
-        res.redirect({ result }, "/admin/coupen");
+        res.redirect("/admin/coupen", { result });
         console.log("coupen added");
       });
     } catch (error) {
@@ -296,9 +312,8 @@ module.exports = {
     try {
       const id1 = req.params.id;
       console.log(id1);
-      await usermodel.findByIdAndUpdate(id1, { block: false })
+      await usermodel.findByIdAndUpdate(id1, { block: false });
       res.redirect("/admin/users");
-
     } catch (error) {
       console.log(error);
     }
@@ -309,9 +324,20 @@ module.exports = {
       const id2 = req.params.id;
       await usermodel.findByIdAndUpdate(id2, { block: true });
       res.redirect("/admin/users");
-
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+
+  bookingdetail: async (req, res) => {
+    try {
+      if (req.session.admin) {
+        await bookingModel.find().then((result) => {
+          res.render("admin/bookingdetails", { result });
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

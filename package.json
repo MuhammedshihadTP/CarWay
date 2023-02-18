@@ -27,6 +27,7 @@
     "nocache": "^3.0.4",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.20",
-    "stripe": "^11.10.0"
+    "stripe": "^11.10.0",
+    "sweetalert": "^2.1.2"
   }
 }

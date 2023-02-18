@@ -48,7 +48,7 @@
               <label for="exampleTextarea1">More Detailes</label>
               <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button type="submit" class="btn btn-primary mr-2" onclick="submited()">Submit</button>
             <button class="btn btn-dark">Cancel</button>
           </form>
         </div>
@@ -58,10 +58,23 @@
   </div>
 
   <script>
-    var el = document.getElementById("wrapper");
-    var toggleButton = document.getElementById("menu-toggle");
+    // var el = document.getElementById("wrapper");
+    // var toggleButton = document.getElementById("menu-toggle");
 
-    toggleButton.onclick = function () {
-        el.classList.toggle("toggled");
-    };
+    // toggleButton.onclick = function () {
+    //     el.classList.toggle("toggled");
+    // };
+
+    function submited(){
+      Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Successfuly Added',
+  showConfirmButton: false,
+  timer: 1500
+
+})
+    }
+
+
 </script>
