@@ -244,6 +244,6 @@ module.exports = {
       cancel_url: `${process.env.APP_URL}/failed.ejs`,
     });
     console.log(session);
-    res.json({ id: session.id });
+    res.json({session});
   },
 };

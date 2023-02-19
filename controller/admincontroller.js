@@ -19,15 +19,15 @@ module.exports = {
       const admin = await adminmodel.findOne({ _id: adminid });
       if (admin) {
         res.render("admin/admindshbord", {
-         
           bookingcount,
           vehiclecount,
-          allusers
+          allusers,
         });
       } else {
         res.redirect("/admin/signup");
       }
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -55,6 +55,7 @@ module.exports = {
         });
       }
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -63,6 +64,7 @@ module.exports = {
     try {
       res.render("admin/adminlogin");
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -88,6 +90,7 @@ module.exports = {
         });
       }
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -97,6 +100,7 @@ module.exports = {
       req.session.admin = null;
       res.redirect("/admin/login");
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -108,13 +112,18 @@ module.exports = {
       const vehiclecount = await vehiclesmodel.count();
       const adminid = req.session.admin;
       if (adminid) {
-        res.render("admin/admindshbord",{  bookingcount,
+        res.render("admin/admindshbord", {
+          bookingcount,
           vehiclecount,
-          allusers});
+          allusers,
+        });
       } else {
         res.redirect("/admin/login");
       }
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/admin/404");
+      console.log(error);
+    }
   },
 
   getaddvehcles: async (req, res) => {
@@ -147,6 +156,7 @@ module.exports = {
         res.redirect("/admin");
       });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -163,7 +173,9 @@ module.exports = {
           res.redirect("/admin/login");
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/admin/404");
+    }
   },
 
   editvehcilelist: async (req, res) => {
@@ -176,6 +188,7 @@ module.exports = {
         res.redirect("/admin/viewvehicles");
       }
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -203,6 +216,7 @@ module.exports = {
           res.redirect("/admin/viewvehicles");
         });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -212,9 +226,11 @@ module.exports = {
       const id = req.params.id;
       await vehiclesmodel.deleteOne({ _id: id }).then((result) => {
         console.log(result);
-        res.redirect("/admin" );
+        res.redirect("/admin");
       });
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/admin/404");
+    }
   },
 
   getCoupens: async (req, res) => {
@@ -232,6 +248,7 @@ module.exports = {
     try {
       res.render("admin/addcoupen", { admin: true });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -244,6 +261,7 @@ module.exports = {
         console.log("coupen added");
       });
     } catch (error) {
+      res.redirect("admin/404");
       console.log(error);
     }
   },
@@ -255,6 +273,7 @@ module.exports = {
         res.render("admin/editcoupen", { result });
       });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -282,6 +301,7 @@ module.exports = {
           res.redirect("/admin/coupen");
         });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -291,8 +311,10 @@ module.exports = {
       const id = req.params.id;
       await coupenmodel.deleteOne({ _id: id }).then((result) => {
         res.redirect("/admin/coupen");
+        // res.redirect('/admin/404')
       });
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -305,6 +327,7 @@ module.exports = {
         });
       }
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -316,6 +339,7 @@ module.exports = {
       await usermodel.findByIdAndUpdate(id1, { block: false });
       res.redirect("/admin/users");
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -326,6 +350,7 @@ module.exports = {
       await usermodel.findByIdAndUpdate(id2, { block: true });
       res.redirect("/admin/users");
     } catch (error) {
+      res.redirect("/admin/404");
       console.log(error);
     }
   },
@@ -337,6 +362,15 @@ module.exports = {
           res.render("admin/bookingdetails", { result });
         });
       }
+    } catch (error) {
+      res.redirect("/admin/404");
+      console.log(error);
+    }
+  },
+
+  fornotfor: async (req, res) => {
+    try {
+      res.render("admin/404");
     } catch (error) {
       console.log(error);
     }

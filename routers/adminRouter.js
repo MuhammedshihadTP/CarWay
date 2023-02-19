@@ -23,7 +23,8 @@ const {
   getuser,
   blockuser,
   unblockuser,
-  bookingdetail
+  bookingdetail,
+  fornotfor
 } = require("../controller/admincontroller");
 const addmincontroller = require("../controller/admincontroller");
 const { postlogin } = require("../controller/Uercontroller");
@@ -52,5 +53,6 @@ router.get('/users',getuser);
 router.get("/Users/:id",blockuser);
 router.get("/user/:id",unblockuser);
 router.get("/booking",bookingdetail);
+router.get("/404",fornotfor);
 
 module.exports = router;
