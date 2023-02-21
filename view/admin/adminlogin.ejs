@@ -1,9 +1,9 @@
-<div class="container-scroller">
+<div class="container-scroller" style="display: flex; align-items: center; justify-content: center;">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="row w-100 m-0">
         <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
           <div class="card col-lg-4 mx-auto">
-            <div class="card-body px-5 py-5">
+            <div class="card-body px-5 py-5" >
               <h3 class="card-title text-left mb-3">login</h3>
             <form action="/admin/login" method="post">
                 <div class="form-group">
@@ -12,7 +12,7 @@
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" class="form-control p_input" name="password" required>
+                  <input type="password" class="form-control p_input" name="password" id="password" required>
                 </div>
               
                 <div class="form-group d-flex align-items-center justify-content-between">
@@ -25,7 +25,7 @@
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                 </div>
-                <p class="sign-up text-center">Creat New Account<a href="#">signup</a></p> 
+                <p class="sign-up text-center">Creat New Account?<a href="/admin/signup" style="color: red;">signup</a></p> 
               </form>
             </div>
           </div>
@@ -36,6 +36,24 @@
 
   <script>
     document.querySelector("form").addEventListener("submit", submit);
+    function submit(clicked) {
+    console.log(clicked);
+    clicked.preventDefault();
+    const email = document.getElementById("email").value;
+    const Password = document.getElementById("password").value;
+  
+  
+     if (email =="") {
+      // document.getElementById("erroremail").innerHTML = "Please Enter Email ";
+      alert ("enter email")
+    } else if (Password =="") {
+      alert("enter password")
+      // document.getElementById("errorpassword").innerHTML =
+      //   "Please Enter Password";
+    } else {
+      clicked.target.submit();
+    }
+  }
 
   </script>
 

@@ -19,7 +19,7 @@ const coupenschema= new  mongoose.Schema({
         required: true
       },
       expireAfter: {
-        type: Date
+        type:String
       },
       usageLimit: {
         type: Number

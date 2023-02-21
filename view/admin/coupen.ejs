@@ -10,9 +10,9 @@
           <th scope="col">coupen code</th>
           <th scope="col">Available</th>
           <th scope="col">Status</th>
-          <th scope="col">Amount</th>
+          <th scope="col">Discount Amount</th>
           <th scope="col">MinimumCartAmount</th>
-          <th scope="col">DiscountAmount</th>
+        
           <th scope="col">exp dat</th>
           <th scope="col">usageLimit</th>
           <th scope="col">Action</th>
@@ -28,14 +28,12 @@
           <td><%=value.code %></td>
           <td><%=value.Available %></td>
           <td><%=value.Status %></td>
-          <td><<%=value.amount %></td>
-        
-          <td><%=value.maxDsicountAmount %></td>
+          <td><%=value.amount%></td>
+          <td><%=value.minCartAmount %></td>
           <td><% value.expireAfter %></td>
-          <td><%=value. usageLimit %></td>
-
-          <td><a href="/admin/coupen/<%=value._id  %>" class="btn "  id="openmodal" style="color: aliceblue;" >DELETE</a></td>
-          <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn btn-success">EDIT</a></td>
+        
+          <td><a onclick="conform('<%=value._id  %>')" class="btn "  id="openmodal" style="color: aliceblue;" >DELETE</a></td>
+          <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn "  style="color: aliceblue;" >EDIT</a></td>
         </tr>
         <% }) %>
       </tbody>
@@ -44,17 +42,50 @@
 </div>
 
 <script>
+  function conform(id){
+    const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
 
-function sumbited(){
-  Swal.fire({
-  position: 'center',
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You Delete this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location='/admin/coupen/'+id
+   
+Swal.fire({
+  position: 'top-end',
   icon: 'success',
-  title: 'Successfuly Added',
+  title: 'Successfuly deleted',
   showConfirmButton: false,
   timer: 1500
 
-});
-}
+})
+   
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
+  }
 
 </script>
+
+
 

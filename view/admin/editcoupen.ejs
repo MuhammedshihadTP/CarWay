@@ -9,7 +9,7 @@
         <div class="col-sm-12  col-xl-6">
           
         <div class="card">
-                <div class="card-body" >
+                <div class="card-body"  style="color: black;">
                     <h4 class="card-title">Add Coupon</h4>
                     <p class="card-description">add discount coupens for products</p>
                     <form class="forms-sample" action="/admin/addcoupen/<%= result.id %>" method="post">
@@ -67,8 +67,8 @@
                             <label for="exp date">exp date</label>
                             <input class="form-control" type="date" name="expireAfter"   value="<%= result.expireAfter %>">                           
                         </div>
-                        <button type="submit" class="btn btn-primary me-2"> ADD COUPEN </button>
-                        <button class="btn btn-light">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2">Update</button>
+                       <a href="admin/coupen"><button class="btn btn-light">Cancel</button></a> 
                         
 
                     </form>

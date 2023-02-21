@@ -8,11 +8,11 @@
       
         <div class="col-sm-12  col-xl-6">
           
-        <div class="card">
+        <div class="card" style="color:black;">
                 <div class="card-body" >
                     <h4 class="card-title">Add Coupon</h4>
                     <p class="card-description">add discount coupens for products</p>
-                    <form class="forms-sample" action="/admin/addcoupen" method="post">
+                    <form class="forms-sample" action="/admin/addcoupen" method="post" >
                         <div class="form-group">
                             <label for="">CODE</label>
                             <input
@@ -68,8 +68,9 @@
                             <input class="form-control" type="date" name="expireAfter">                           
                         </div>
                         <button type="submit" class="btn btn-primary me-2"> ADD COUPEN </button>
-                        <button class="btn btn-light">Cancel</button>
+                      
                     </form>
+                    <a href="/admin/coupen"><button class="btn btn-light">Cancel</button></a> 
                 </div>
 
                 <!-- <div class="col-12 grid-margin stretch-card">

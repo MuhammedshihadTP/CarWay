@@ -246,6 +246,7 @@ module.exports = {
 
   getaddcoupen: async (req, res) => {
     try {
+
       res.render("admin/addcoupen", { admin: true });
     } catch (error) {
       res.redirect("/admin/404");
@@ -257,7 +258,7 @@ module.exports = {
     try {
       const coupen = new coupenmodel(req.body);
       coupen.save().then((result) => {
-        res.redirect("/admin/coupen", { result });
+        res.redirect("/admin/coupen");
         console.log("coupen added");
       });
     } catch (error) {

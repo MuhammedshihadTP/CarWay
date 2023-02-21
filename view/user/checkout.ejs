@@ -171,12 +171,15 @@
         })
       })
       .then(function(response) {
+        // console.log(response.id,"payment");
+
         return response.json();
-        
+       
       })
       .then(function(session) {
+        console.log(session.id);
         return stripe.redirectToCheckout({
-          sessionId: session.id
+          sessionId:session.id
         });
       })
       .then(function(result) {
@@ -186,7 +189,7 @@
         }
       })
       .catch(function(error) {
-        console.error("Error:", error);
+        console.log("Error:", error);
       });
 
 
