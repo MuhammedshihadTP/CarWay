@@ -6,7 +6,7 @@ const { post } = require("../routers/adminRouter");
 const { render } = require("ejs");
 const coupenmodel = require("../models/coupenmodel.js");
 const usermodel = require("../models/UserModel");
-const bookingModel = require("../models/bookingModel");
+
 const { modelName } = require("../models/UserModel");
 
 module.exports = {

@@ -1,5 +1,3 @@
-
-
 <div class="container mt-5 mb-5">
   <div class="row d-flex justify-content-center">
     <div class="col-md-10">
@@ -11,16 +9,8 @@
                 <img id="main-image" src="" width="250" />
               </div>
               <div class="thumbnail text-center">
-                <img
-                  onclick="change_image(this)"
-                  src="../images/<%=prodects.image %>"
-                  width="70"
-                />
-                <img
-                  onclick="change_image(this)"
-                  src="../images/<%= prodects.image %>"
-                  width="70"
-                />
+                <img  src="../images/<%=prodects.image %>" width="auto" />
+            
               </div>
             </div>
           </div>
@@ -35,11 +25,15 @@
               </div>
               <div class="mt-4 mb-3">
                 <span class="text-uppercase text-muted brand">Orianz</span>
-                <h5 class="text-uppercase"><%=prodects.name %></h5>
-                <div class="price d-flex flex-row align-items-center">
-                  <span class="act-price" id="price"><%=prodects.price %></span>
+                <h5 class="text-uppercase" id="name">
+                  <%=prodects.name %>
+                </h5>
+                <div class="price d-flex flex-row align-items-center">₹
+                  <span class="act-price" id="price">
+                    <%=prodects.price %>
+                  </span>
                   <div class="ml-2">
-                    <small class="dis-price">$500</small> <span>40% OFF</span>
+                    <small class="dis-price">₹500</small> <span>40% OFF</span>
                   </div>
                 </div>
               </div>
@@ -57,53 +51,54 @@
                                 </label> <label class="radio"> <input type="radio" name="size" value="XXL">
                                     <span>XXL</span> </label>
                             </div> -->
-                            <!-- <div class="mt-4 mb-3">
-                              <div style="display: flex; width: 100%;">
-                               
-                                <input
-                                type="datetime-local"
-                                class="w-50% mt-3"
-                                placeholder="select date and time"
-                                style="
-                                  background: transparent;
-                                  height: 50px;
-                                  border-color: #f7941d;
-                                "
-                                id="start"
-                                onchange="selectTimeslote()"
-                              />
-                              <P style="margin-top: 30px; margin-left: 10px;"> TO</P>
-                              <input
-                              type="datetime-local"
-                              class="w-50% mt-3 "
-                              placeholder="select date and time"
-                              style="
-                                background: transparent;
-                                height: 50px;
-                                border-color: #f7941d;
-                                margin-left: 20px;
-                              "
-                               onchange="selectTimeslote()"
-                              id="end"
-                            />
-                              </div>
+              <form action="">
+                <div class="mt-4 mb-3">
+                  <div style="display: flex; width: 100%">
+                    <input type="datetime-local" class="w-50% mt-3" placeholder="select date and time" style="
+                        background: transparent;
+                        height: 50px;
+                        border-color: #f7941d;
+                      " id="start" onchange="selectTimeslote()" required />
+                    <P style="margin-top: 30px; margin-left: 10px"> TO</P>
+                    <input type="datetime-local" class="w-50% mt-3" placeholder="select date and time" style="
+                        background: transparent;
+                        height: 50px;
+                        border-color: #f7941d;
+                        margin-left: 20px;
+                      " onchange="selectTimeslote()" id="end" required />
+                  </div>
+                </div>
+                <div class="single-widget">
+                  <div class="content" data-id=<%=prodects._id %>>
+                    <ul>
+                      <li>
+                        Hours Rate :
+                        <span id="price">
+                          <%=prodects.price %>
+                        </span>
+                      </li>
+                      <li>Total hours:<span id="totalhours"></span></li>
+
+                      <li class="last">Total : <span id="totale"></span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="cart mt-4 align-items-center">
+                  <button class="btn text-uppercase mr-2 px-4">
+                    Add to cart
+                  </button>
+
+                  <button type="button">
+                    <a class="btn" id="buy" onclick="clicked()">Book Now</a>
 
 
+                  </button>
+                  <i class="fa fa-heart text-muted"></i>
+                  <i class="fa fa-share-alt text-muted"></i>
+                </div>
+              </form>
 
-                            </div>
-                            <div> <p id="totalhours"></p></div> -->
-
-                      
-              <div class="cart mt-4 align-items-center">
-                <button class="btn text-uppercase mr-2 px-4">
-                  Add to cart
-                </button>
-                <a class="btn text-uppercase mr-2 px-4" href="/booking/<%= prodects._id %>"
-                  >BOOK NOWE</a
-                >
-                <i class="fa fa-heart text-muted"></i>
-                <i class="fa fa-share-alt text-muted"></i>
-              </div>
             </div>
           </div>
         </div>
@@ -112,93 +107,158 @@
   </div>
 </div>
 
-
-
 <style>
-    .card {
-        border: none;
-    }
+  .card {
+    border: none;
+  }
 
-    .product {
-        background-color: #eee;
-    }
+  .product {
+    background-color: #eee;
+  }
 
-    .brand {
-        font-size: 13px;
-    }
+  .brand {
+    font-size: 13px;
+  }
 
-    .act-price {
-        color: #F7941D;
-        font-weight: 700;
-    }
+  .act-price {
+    color: #f7941d;
+    font-weight: 700;
+  }
 
-    .dis-price {
-        text-decoration: line-through;
-    }
+  .dis-price {
+    text-decoration: line-through;
+  }
 
-    .about {
-        font-size: 14px;
-    }
+  .about {
+    font-size: 14px;
+  }
 
-    .color {
-        margin-bottom: 10px;
-    }
+  .color {
+    margin-bottom: 10px;
+  }
 
-    label.radio {
-        cursor: pointer;
-    }
+  label.radio {
+    cursor: pointer;
+  }
 
-    label.radio input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
+  label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
-    label.radio span {
-        padding: 2px 9px;
-        border: 2px solid #F7941D;
-        display: inline-block;
-        color: black;
-        border-radius: 3px;
-        text-transform: uppercase;
-    }
+  label.radio span {
+    padding: 2px 9px;
+    border: 2px solid #f7941d;
+    display: inline-block;
+    color: black;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
 
-    label.radio input:checked+span {
-        border-color: #F7941D;
-        background-color: #F7941D;
-        color: #fff;
-    }
+  label.radio input:checked+span {
+    border-color: #f7941d;
+    background-color: #f7941d;
+    color: #fff;
+  }
 
-    .btn {
-        background-color: black !important;
-        border-color: beige;
-    }
+  .btn {
+    background-color: black !important;
+    border-color: beige;
+  }
 
-    .btn:hover {
-        background-color: #F7941D !important;
-        border-color: #F7941D !important
-    }
+  .btn:hover {
+    background-color: #f7941d !important;
+    border-color: #f7941d !important;
+  }
 
-    .btn :focus {
-        box-shadow: none;
-    }
+  .btn :focus {
+    box-shadow: none;
+  }
 
-    .cart i {
-        margin-right: 10px;
-    }
+  .cart i {
+    margin-right: 10px;
+  }
 </style>
 
 <script>
   function change_image(image) {
     var container = document.getElementById("main-image");
-
     container.src = image.src;
+    document.addEventListener("DOMContentLoaded", function(event) {});
   }
 
-  document.addEventListener("DOMContentLoaded", function (event) {});
+  function selectTimeslote() {
 
+    const from = document.getElementById("start");
+    const to = document.getElementById("end");
+    const diffrence = new Date(to.value) - new Date(from.value);
+    var hours = diffrence / (1000 * 60 * 60);
+    document.getElementById("totalhours").innerHTML = hours;
+
+    console.log(hours);
+    const rupee = document.getElementById("price").innerText;
+    console.log(rupee);
+
+    const total = (hours * rupee)
+    document.getElementById('totale').innerHTML = total
+    console.log(total);
+  }
+
+
+  function clicked() {
+
+    console.log(document.getElementById('totale').innerText);
+    if(document.getElementById('totale').innerText!==''){
+      console.log('Shihsd');
+    console.log("heloooo");
+    console.log(document.querySelector('[data-id]').dataset.id);
+    const id= document.querySelector('[data-id]').dataset.id
+    const from = document.getElementById("start").value;
+    const to = document.getElementById("end").value;
+    const total= document.getElementById('totale').innerText
+    const name=document.getElementById("name").innerText
+    // const query = e.target.value
+      console.log(from,to,total,id);
+
+      fetch(`http://localhost:3000/Bookings`,{
+        credentials:"include",
+        cache:"default",
+        method: "POST",
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify({start: from, end: to , total:parseInt(total),id:parseInt(id),name:name})
+      }).then(()=>window.location.href = '/cheackout')
+    //   .then(response => response.json())
+    // .then(data => {
+    //   console.log(data);
+    //   // window.location.href ="/booking";
+    // })
+    // .catch(error => console.error(error));
+    }else{
+      const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            Toast.fire({
+            icon: 'error',
+            title: 'Seleect The Date'
+            })
+
+    }
   
+
+  }
+
+
 </script>
 <%-include('../partials/footer.ejs') %>

@@ -7,71 +7,46 @@
           <h2>Make Your Checkout Here</h2>
           <p>Please register in order to checkout more quickly</p>
           <!-- Form -->
-          <form class="form" method="post" action="/Bookings">
+          <form class="form" method="post" action="">
             <div class="row">
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Full name<span>*</span></label>
-                  <input type="text" name="name" required="required" />
+                  <input type="text"  id="fullname" value="<%=username%>" required="required" />
                 </div>
               </div>
 
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Email Address<span>*</span></label>
-                  <input type="email" name="email" required="required" />
+                  <input type="email"  id="email" value="<%=email%>" required="required" />
                 </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-12">
+              <!-- <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Vehicle Name<span>*</span></label>
-                  <input type="text" name="vehiclename" id="vehiclename" value="<%=result.name %>" required="required" />
+                  <input type="text" name="vehiclename" id="vehiclename" value="" required="required" />
                 </div>
-              </div>
+              </div> -->
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Phone Number<span>*</span></label>
-                  <input type="number" name="number" placeholder="" required="required" />
+                  <input type="tel" maxlength="10"  id="number" placeholder="" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Address <span>*</span></label>
-                  <input type="text" name="address" placeholder="" required="required" />
+                  <input type="text"  id="address" placeholder="" required="required" />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
                   <label>Licence Number<span>*</span></label>
-                  <input type="text" name="licn" placeholder="" required="required" />
+                  <input type="text" id="Lice" placeholder="" required="required" />
                 </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-12">
-                <div class="form-group">
-                  <label>Postal Code<span>*</span></label>
-                  <input type="text" name="post" placeholder="" required="required" />
-                </div>
-              </div>
-              <h6>BOOKED TIME SLOTES</h6>
-              <div class="col-lg-6 col-md-6 col-12">
-                <div class="form-group">
-                  <label>FROM<span>*</span></label>
-
-                  <input type="datetime-local" name="starttime" required="required" id="start" onchange="selectTimeslote()" />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-12">
-                <div class="form-group">
-                  <label>To<span>*</span></label>
-
-                  <input type="datetime-local" name="endtime" required="required" id="end" onchange="selectTimeslote()" />
-                </div>
-              </div>
-              <!-- <div class="col-lg-6 col-md-6 col-12">
-                <div style="display: flex;">
-                  <button href="" class="btn" type="submit" >submit</button>
-                  <button href="" class="btn ml-4">Cancel</button>
-                </div> -->
+          
 
               <div class="col-lg-6 col-md-6 col-12">
                 <div class="order-details">
@@ -80,12 +55,11 @@
                     <h2>TOTALS</h2>
                     <div class="content">
                       <ul>
-                        <li>Hours Rate<span id="price">
-                            <%=result.price %>
-                          </span></li>
-                        <li>Total hours<span id="totalhours"></span></li>
+                        <li>Vehicle Name:<span id="Vname"><%=time.name %></span></li>
+                        <li>From :<span id="start"><%=time.start %></span></li>
+                        <li>To :<span id="End"><%=time.end %></span></li>
 
-                        <li class="last">Total<span id="totale"></span></li>
+                        <li class="last">Total Amount : ₹<span id="totale"> <%=time.total %> </span></li>
                       </ul>
                     </div>
                   </div>
@@ -100,7 +74,7 @@
                   <div class="single-widget get-button">
                     <div class="content">
                       <div class="button">
-                        <a href="/payment"><button type="submit" id="checkout" class="btn">proceed to
+                        <a ><button id="checkout"  type="button"   class="btn">proceed to
                             checkout</button></a>
                       </div>
                     </div>
@@ -121,23 +95,23 @@
 <%-include('../partials/footer.ejs') %>
 <!--/ End Checkout -->
 <script>
-  function selectTimeslote() {
-    const from = document.getElementById("start");
-    const to = document.getElementById("end");
+  // function selectTimeslote() {
+  //   const from = document.getElementById("start");
+  //   const to = document.getElementById("end");
 
-    const diffrence = new Date(to.value) - new Date(from.value);
-    var hours = diffrence / (1000 * 60 * 60);
+  //   const diffrence = new Date(to.value) - new Date(from.value);
+  //   var hours = diffrence / (1000 * 60 * 60);
 
-    document.getElementById("totalhours").innerHTML = hours;
+  //   document.getElementById("totalhours").innerHTML = hours;
 
-    console.log(hours);
-    const rupee = document.getElementById("price").innerText;
-    console.log(rupee);
+  //   console.log(hours);
+  //   const rupee = document.getElementById("price").innerText;
+  //   console.log(rupee);
 
-    const total = (hours * rupee)
-    document.getElementById('totale').innerHTML = total
-    console.log(total);
-  }
+  //   const total = (hours * rupee)
+  //   document.getElementById('totale').innerHTML = total
+  //   console.log(total);
+  // }
 
   //   function clicked(){
   //     Swal.fire({
@@ -153,44 +127,71 @@
 
   const buttoun = document.querySelector("#checkout")
   buttoun.addEventListener('click', () => {
-  const name = document.getElementById("vehiclename").value;
-  const rupee = document.getElementById("totale").innerText;
-  console.log(name, rupee);
-    fetch("http://localhost:3000/payment", {
+  const Name=document.getElementById("fullname").value;
+  const Email=document.getElementById("email").value;
+  const phoneNo=document.getElementById("number").value;
+  const Address=document.getElementById("address").value;
+  const lice=document.getElementById('Lice').value;
+  const vName=document.getElementById("Vname").innerText
+  const start=document.getElementById("start").innerText
+  const end=document.getElementById("End").innerText
+  const total=document.getElementById("totale").innerText
+  console.log(Name,Email,phoneNo,Address,lice);
+
+if(Name!=='' && Email!=='' && Address!=='' && phoneNo!=='' && lice!=='' ){
+  fetch("http://localhost:3000/cheackout", {
         headers: {
           'Content-Type': 'application/json'
         },
         method: "POST",
         body: JSON.stringify({
           vehicles: {
-            name: name,
+            name: Name,
+            email:Email,
+            phone:parseInt(phoneNo),
+            address:Address,
+            lice:lice,
+            vname:vName,
+            start:start,
+            end:end,
+            amount:parseInt(total),
+
             // image: '',
-            amount: parseInt(rupee),
+            // amount: parseInt(rupee),
             // "quantity": 1
           }
         })
       })
       .then(function(response) {
         // console.log(response.id,"payment");
-
-        return response.json();
+        return response.json().then(json=> Promise.resolve(json))
        
+      }).then(({url})=>{
+        // console.log(url,"done");
+        window.location = url
+      }).catch(error=>{
+        console.log(error.url,"koyappam");
       })
-      .then(function(session) {
-        console.log(session.id);
-        return stripe.redirectToCheckout({
-          sessionId:session.id
-        });
-      })
-      .then(function(result) {
+      
+}else{
+  const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            Toast.fire({
+            icon: 'error',
+            title: 'Please Fill The Field'
+            })
 
-        if (result.error) {
-          alert(result.error.message);
-        }
-      })
-      .catch(function(error) {
-        console.log("Error:", error);
-      });
+}
+   
 
 
   })

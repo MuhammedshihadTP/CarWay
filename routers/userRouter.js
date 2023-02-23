@@ -16,6 +16,11 @@ const {
   getbookingform,
   postbooking,
   postpayment,
+  getcartpage,
+  addToCart,
+  getcheaackoutform,
+  getsucssuse,
+  getfailed,
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -30,9 +35,12 @@ router.post("/login", postlogin);
 router.get("/logout",userlogout);
 router.get('/prodect/:id',getproductdetails);
 router.get("/search",postsearch);
-router.get("/booking/:id",getbookingform);
-router.post("/Bookings",postbooking)
-router.post("/payment",postpayment)
-
+router.post("/Bookings",postbooking);
+router.get("/cheackout",getcheaackoutform);
+router.post("/cheackout",postpayment);
+router.get("/Sucssus",getsucssuse);
+router.get("/failed",getfailed);
+router.get("/cart",getcartpage);
+router.post("/cart",postcart)
 
 module.exports = router;

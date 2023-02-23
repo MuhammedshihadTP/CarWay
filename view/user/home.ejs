@@ -102,10 +102,15 @@
                               ><span>Add to Compare</span></a
                             >
                           </div>
-                          <div class="product-action-2">
-                            <a title="Add to cart" href="#">Add to cart</a>
+                          <form action="/add-to-cart" method="post">
+                            <div class="product-action-2">
+                              <input type="hidden" name="id" value="<%=value._id %>">
+                              <a title="Add to cart" href="">Add to cart</a>
+                            </div>
+                          </form>
                           </div>
-                        </div>
+                          
+                          
                       </div>
                       <div class="product-content">
                         <h3><a href="product-details.html"><%=value.name %></a></h3>

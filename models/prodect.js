@@ -1,17 +1,11 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 const prodectschema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+});
 
- 
-})
-
-const prodect= mongoose.model('prodects', prodectschema,'prodects');
+const prodect = mongoose.model("prodects", prodectschema, "prodects");
 module.exports = prodect;
-
-
-
