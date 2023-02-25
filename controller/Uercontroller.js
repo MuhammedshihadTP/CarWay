@@ -13,6 +13,7 @@ const { use } = require("../mail/transporter");
 const auth = require("../middleware/auth");
 const timeslotes = require("../models/timeSlot");
 const CheackoutModal = require("../models/CheackOut");
+const CartModel=require("../models/Cart")
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
@@ -148,7 +149,7 @@ module.exports = {
     }
   },
   // prodect controller....... 
-  getproductdetails: async (req, res) => {
+  getproductdetails: async (req, res,auth) => {
     try {
       const id = req.params.id;
       console.log(id);
@@ -190,7 +191,7 @@ module.exports = {
     }
   },
 
-  getcheaackoutform: async (req, res) => {
+  getcheaackoutform: async (req, res,auth) => {
     try {
       // const qu = req.query.q;
       // console.log(qu);
@@ -201,14 +202,8 @@ module.exports = {
 
       console.log(username, email);
       console.log(req.cookies.booking_id);
-      // timeslotes.findById(res.cookir)
       if (req.session.log) {
-        // await vehiclesmodel.findOne({ _id: id }).then((result) => {
-        //   console.log(result);
-        //   res.render("user/checkout", { result, user });
-        // });
         const time = await timeslotes.findOne({ _id: cookiesid });
-
         console.log(time, "heloo");
         res.render("user/checkout", { user, email, time, username });
       }
@@ -305,6 +300,33 @@ module.exports = {
     }
   },
   //  Cartntroller....... 
+  postCart:async(req,res)=>{
+    try {
+      let vehicles=[]
+     const cart =req.body;
+     console.log(req.body,"hello--------------------");
+     console.log(cart,"helllo");
+     const id=req.session.log._id
+     console.log(id,req.body,"helooo");
+     const user= await usersignup.findById({_id:id});
+     console.log(user);
+     const alreadyExistCart = await CartModel.findOne({orderdby:user._id})
+    
+     if(alreadyExistCart){
+      alreadyExistCart.remove()
+     }
+      for(let i=0;i< cart.length;i++){
+        let object={}
+        object.vehicle=cart[i]._id
+        object.price=cart[i].total
+        vehicles.push(object);
+      }
+      console.log(vehicles,"done");
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
   getcartpage: async (req, res) => {
     try {
       if (req.session.log) {
@@ -315,4 +337,21 @@ module.exports = {
       }
     } catch (error) {}
   },
+
+
+  // getavalabelcars: async(req,res)=>{
+  //   const { startDate, endDate } = req.body;
+  //   console.log(req.body);
+
+  //   CheackoutModal.find({ availability: { $elemMatch: { start: { $lte: endDate }, end: { $gte: startDate }, isAvailable: true } } })
+  //   .then(availableCars => {
+  //     res.render('user/prodeuctgrid', { availableCars, startDate, endDate });
+  //   })
+  //   .catch(error => {
+  //     console.error(error);
+  //     res.status(500).send('Internal server error');
+  //   });
+
+
+  // },
 };

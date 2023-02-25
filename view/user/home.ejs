@@ -21,35 +21,40 @@
                       border-color: #f7941d;
                     "
                   /> -->
-                  <div style="display: flex; width: 100%;">
-                    <!-- <label for="">STARTIN DATE</label> -->
+                  <form action="/cars" method="post">
+                    <div style="display: flex; width: 100%;">
+                      <!-- <label for="">STARTIN DATE</label> -->
+                      <input
+                      type="datetime-local"
+                      class="w-50% mt-3"
+                      placeholder="select date and time"
+                      name="startDate"
+                      style="
+                        background: transparent;
+                        height: 50px;
+                        border-color: #f7941d;
+                      "
+                    />
+                    <P style="margin-top: 30px; margin-left: 10px;"> TO</P>
                     <input
                     type="datetime-local"
-                    class="w-50% mt-3"
+                    class="w-50% mt-3 "
+                    name="endDate"
                     placeholder="select date and time"
                     style="
                       background: transparent;
                       height: 50px;
                       border-color: #f7941d;
+                      margin-left: 20px;
                     "
                   />
-                  <P style="margin-top: 30px; margin-left: 10px;"> TO</P>
-                  <input
-                  type="datetime-local"
-                  class="w-50% mt-3 "
-                  placeholder="select date and time"
-                  style="
-                    background: transparent;
-                    height: 50px;
-                    border-color: #f7941d;
-                    margin-left: 20px;
-                  "
-                />
-                  </div>
-               
-                  <div class="button">
-                    <a href="#" class="btn mt-2 w-100">Find LOcation</a>
-                  </div>
+                    </div>
+                 
+                    <div class="button">
+                      <button  type="submit" class="btn mt-2 w-100">Find Cars</button>
+                    </div>
+                  </form>
+                 
                 </div>
               </div>
             </div>

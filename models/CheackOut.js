@@ -9,37 +9,43 @@ const CheackoutSchma = new mongoose.Schema({
 
   email: {
     type: String,
-  
+
   },
   vname: {
     type: String,
-   
+
   },
 
   phone: {
     type: Number,
-   
+
   },
   address: {
     type: String,
-  
+
   },
   lice: {
     type: Number,
   },
 
+
+  amount: {
+    type: Number,
+  },
   start: {
-    type: String,
- 
+    type: Date,
+
   },
   end: {
-    type: String,
-   
+    type: Date,
+
   },
-  amount:{
-    type:Number,
+
+  isAvailable: {
+    type: Boolean,
+    default: true
   }
- 
+
 })
 
 const Cheackout = mongoose.model('Cheackout', CheackoutSchma);

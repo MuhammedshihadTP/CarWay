@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const express = require("express");
+const authentication=require("../middleware/auth")
 const {
   home,
   signup,
@@ -21,6 +22,8 @@ const {
   getcheaackoutform,
   getsucssuse,
   getfailed,
+  postCart,
+  getavalabelcars
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -41,6 +44,6 @@ router.post("/cheackout",postpayment);
 router.get("/Sucssus",getsucssuse);
 router.get("/failed",getfailed);
 router.get("/cart",getcartpage);
-router.post("/cart",postcart)
-
+router.post("/cart",postCart);
+// router.post("/cars",getavalabelcars)
 module.exports = router;
