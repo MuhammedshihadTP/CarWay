@@ -1,4 +1,4 @@
-<%- include('../partials/adminheader.ejs') %> 
+<%- include('../partials/adminheader.ejs') %>
 
 <section style="background-color: #eee;">
   <div class="container py-5">
@@ -10,8 +10,7 @@
             <div class="row">
               <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                 <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                  <img src=" ../images/<%=value.image%>"
-                    class="w-100" />
+                  <img src=" ../images/<%=value.image%>" class="w-100" />
                   <a href="#!">
                     <div class="hover-overlay">
                       <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
@@ -57,7 +56,7 @@
                 <!-- <h6 class="text-success">Free shipping</h6> -->
                 <div class="d-flex flex-column mt-4">
                   <!-- <a class="btn btn-primary btn-sm"  href=" /admin/vehicless/" type="submit"  onclick="conform()">DELETE</a> -->
-                  <a class="btn btn-primary btn-sm" type="submit"  onclick="conform('<%=value._id %>')">DELETE</a>
+                  <a class="btn btn-primary btn-sm" type="submit" onclick="conform('<%=value._id %>')">DELETE</a>
                   <a class="btn btn-primary btn-sm mt-2" type="submit" href="/admin/vehicles/<%=value._id%>">
                     EDIT
                   </a>
@@ -69,51 +68,50 @@
         </div>
       </div>
 
-  </div>
+    </div>
 </section>
 
 <script>
-  function conform(id){
+  function conform(id) {
     const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
 
-swalWithBootstrapButtons.fire({
-  title: 'Are you sure?',
-  text: "You Delete this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Yes, delete it!',
-  cancelButtonText: 'No, cancel!',
-  reverseButtons: true
-}).then((result) => {
-  if (result.isConfirmed) {
-    window.location='/admin/vehicless/'+id
-   
-Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Successfuly deleted',
-  showConfirmButton: false,
-  timer: 1500
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You Delete this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location = '/admin/vehicless/' + id
 
-})
-   
-  } else if (
-    /* Read more about handling dismissals below */
-    result.dismiss === Swal.DismissReason.cancel
-  ) {
-    swalWithBootstrapButtons.fire(
-      'Cancelled',
-      'Your imaginary file is safe :)',
-      'error'
-    )
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Successfuly deleted',
+          showConfirmButton: false,
+          timer: 1500
+
+        })
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
   }
-})
-  }
-
 </script>

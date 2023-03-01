@@ -23,7 +23,9 @@ const {
   getsucssuse,
   getfailed,
   postCart,
-  getavalabelcars
+  getavalabelcars,
+  getprofilepage,
+  updateprofilepage
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -46,4 +48,6 @@ router.get("/failed",getfailed);
 router.get("/cart",getcartpage);
 router.post("/cart",postCart);
 // router.post("/cars",getavalabelcars)
+router.get("/profile/:id",getprofilepage);
+router.post("/Profile/:id",updateprofilepage)
 module.exports = router;

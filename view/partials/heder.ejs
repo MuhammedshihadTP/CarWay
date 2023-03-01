@@ -37,10 +37,10 @@
               </select> -->
               <form method="post" action="/search">
                 <input name="search" placeholder="Search  Here....." type="search" id="search">
-                <div class="autosearch" id="output"
+                <!-- <div class="autosearch" id="output"
                   style=" display: none;  background-color: white; overflow: auto; height: 17vh; width: 100%; z-index: 2; position: relative;">
 
-                </div>
+                </div> -->
                 <button class="btnn"><i class="ti-search"></i></button>
 
               </form>
@@ -71,7 +71,7 @@
 
             <% if(user) {%>
               <div class="sinlge-bar">
-                <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                <a href="/profile/<%=user._id %>" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
               </div>
               <div class="sinlge-bar shopping">
                 <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
@@ -139,7 +139,7 @@
                 <div class="navbar-collapse">
                   <div class="nav-inner">
                     <ul class="nav main-menu menu navbar-nav">
-                      <li class="active"><a href="#">Home</a></li>
+                      <li class="active"><a href="/home">Home</a></li>
 
 
                       <li><a href="#">Category<i class="ti-angle-down"></i></span></a>
@@ -206,30 +206,32 @@
   document.getElementById('search').addEventListener('input', event => {
     const query = event.target.value
     const response = fetch(`http://localhost:3000/search?q=${query}`).then(res => res.json()).then((data) => {
-      console.log(data);
-      data.result.forEach(result => {
-      console.log(result);
-        document.getElementById("output").innerHTML += `<li data-id=${result.id}>${result.name}  </li>`
-      });
-      const collection = document.getElementById("output").children
-      collection.id.forEach(element => {
-        console.log(element);
+      console.log(data.name);
+      
+    
+      // data.result.forEach(result => {
+      // console.log(result);
+      //   document.getElementById("output").innerHTML += `<li data-id=${result.id}>${result.name}  </li>`
+      // });
+      // const collection = document.getElementById("output").children
+      // collection.id.forEach(element => {
+      //   console.log(element);
 
-      });
+      // });
 
       
     }
     )
 
 
-    if (query.length > 0) {
-      document.getElementById('output').style.display = 'block'
+    // if (query.length > 0) {
+    //   document.getElementById('output').style.display = 'block'
 
-      console.log(query);
-    } else {
-      document.getElementById('output').style.display = "none"
+    //   console.log(query);
+    // } else {
+    //   document.getElementById('output').style.display = "none"
 
-    }
+    // }
   });
 
 

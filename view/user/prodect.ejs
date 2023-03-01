@@ -231,6 +231,7 @@
         },
 
         body: JSON.stringify({
+          id:id,
           start: from,
           end: to,
           total: parseInt(total),
@@ -268,7 +269,7 @@
 
   function addtocart() {
     if (document.getElementById('totale').innerText !== '') {
-      // const id= document.querySelector('[data-id]').dataset.id
+      const id= document.querySelector('[data-id]').dataset.id
       const from = document.getElementById("start").value;
       const to = document.getElementById("end").value;
       const total = document.getElementById('totale').innerText
@@ -283,6 +284,7 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          id:id,
           start: from,
           end: to,
           total: parseInt(total),

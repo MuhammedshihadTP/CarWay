@@ -1,5 +1,6 @@
 const usersignup = require("../models/UserModel");
 const Usermodel = require("../models/UserModel");
+
 const bcrypt = require("bcrypt");
 const { exists, rawListeners, find, findOne } = require("../models/UserModel");
 const session = require("express-session");
@@ -13,11 +14,11 @@ const { use } = require("../mail/transporter");
 const auth = require("../middleware/auth");
 const timeslotes = require("../models/timeSlot");
 const CheackoutModal = require("../models/CheackOut");
-const CartModel=require("../models/Cart")
+const CartModel = require("../models/Cart");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
-  // homepage controller.......   
+  // homepage controller.......
   home: async (req, res) => {
     try {
       const userid = req.session.log;
@@ -30,7 +31,7 @@ module.exports = {
     }
   },
 
-    // signup controller....... 
+  // signup controller.......
   getsignup: (req, res) => {
     res.render("user/signup");
   },
@@ -108,7 +109,7 @@ module.exports = {
       console.log(error);
     }
   },
-  // login controller....... 
+  // login controller.......
   getlogin: (req, res) => {
     if (req.session.log) {
       res.redirect("/login");
@@ -136,7 +137,7 @@ module.exports = {
         }
       });
     } else {
-      res.json({ msg: "Your is blocked" });
+      res.json({ msg: "Your  blocked" });
     }
   },
 
@@ -148,8 +149,8 @@ module.exports = {
       console.log(error);
     }
   },
-  // prodect controller....... 
-  getproductdetails: async (req, res,auth) => {
+  // prodect controller.......
+  getproductdetails: async (req, res, auth) => {
     try {
       const id = req.params.id;
       console.log(id);
@@ -174,16 +175,17 @@ module.exports = {
 
   postsearch: async (req, res) => {
     try {
-      // const result = req.query.q;
-      // console.log(result);
+     
+      console.log(req.query.q);
 
       const agg = [
         { $search: { autocomplete: { query: req.query.q, path: "name" } } },
         { $limit: 10 },
-        { $project: { name: 1 } },
+        { $project: { name: 1} },
       ];
+      
 
-      const result = await prodect.aggregate(agg);
+      const result = await vehiclesmodel.aggregate(agg);
       console.log(result);
       res.json({ result });
     } catch (error) {
@@ -191,10 +193,9 @@ module.exports = {
     }
   },
 
-  getcheaackoutform: async (req, res,auth) => {
+  getcheaackoutform: async (req, res, auth) => {
     try {
-      // const qu = req.query.q;
-      // console.log(qu);
+   
       const user = req.session.log;
       const username = req.session.log.name;
       const email = req.session.log.email;
@@ -211,24 +212,7 @@ module.exports = {
       console.log(error);
     }
   },
-  // postcheackout: async (req, res) => {
-  //   try {
-  //     const {
-  //       name,
-  //       email,
-  //       number,
-  //       address,
-  //       licn,
-  //       post,
-  //       starttime,
-  //       endtime,
-  //       vehiclename,
-  //     } = req.body;
-  //     console.log(req.body,"helllo");
-  //     const bookings = new booking(req.body);
-  //     await bookings.save();
-  //   } catch (error) { }
-  // },
+
 
   postbooking: async (req, res) => {
     console.log(req.body);
@@ -299,30 +283,37 @@ module.exports = {
       console.log(error);
     }
   },
-  //  Cartntroller....... 
-  postCart:async(req,res)=>{
+  //  Cartntroller.......
+  postCart: async (req, res) => {
     try {
-      let vehicles=[]
-     const cart =req.body;
-     console.log(req.body,"hello--------------------");
-     console.log(cart,"helllo");
-     const id=req.session.log._id
-     console.log(id,req.body,"helooo");
-     const user= await usersignup.findById({_id:id});
-     console.log(user);
-     const alreadyExistCart = await CartModel.findOne({orderdby:user._id})
-    
-     if(alreadyExistCart){
-      alreadyExistCart.remove()
-     }
-      for(let i=0;i< cart.length;i++){
-        let object={}
-        object.vehicle=cart[i]._id
-        object.price=cart[i].total
-        vehicles.push(object);
-      }
-      console.log(vehicles,"done");
+      console.log(req.body.id, "helloo--------------");
+      // const {name}=usersignup;
+      // console.log(name);
+      let prodect = await vehiclesmodel.findById(req.body.id);
+      console.log(prodect);
+      let addtocart = await Usermodel.addCart();
+      console.log(addtocart);
 
+      // let vehicles = []
+      // const cart = req.body;
+      // console.log(req.body, "hello--------------------");
+      // console.log(cart, "helllo");
+      // const id = req.session.log._id
+      // console.log(id, req.body, "helooo");
+      // const user = await usersignup.findById({ _id: id });
+      // console.log(user);
+      // const alreadyExistCart = await CartModel.findOne({ orderdby: user._id })
+      // console.log(user._id);
+      // if (alreadyExistCart) {
+      //   alreadyExistCart.remove()
+      // }
+      // for (let i = 0; i < cart.length; i++) {
+      //   let object = {}
+      //   object.vehicle = cart[i]._id
+      //   object.price = cart[i].total
+      //   vehicles.push(object);
+      // }
+      // console.log(vehicles, "done");
     } catch (error) {
       console.log(error);
     }
@@ -338,7 +329,6 @@ module.exports = {
     } catch (error) {}
   },
 
-
   // getavalabelcars: async(req,res)=>{
   //   const { startDate, endDate } = req.body;
   //   console.log(req.body);
@@ -352,6 +342,41 @@ module.exports = {
   //     res.status(500).send('Internal server error');
   //   });
 
-
   // },
+
+  getprofilepage: async (req, res) => {
+    try {
+      const userid = req.params.id;
+      const userdetailes = await Usermodel.findById({ _id: userid });
+      res.render("user/profile",{ userdetailes });
+    } catch (error) {
+      console.log(error);
+
+    }
+  },
+
+  updateprofilepage:async(req,res)=>{
+   try {
+    const userid = req.params.id;
+    console.log(userid);
+    console.log('shihad' );
+    await Usermodel.updateOne({_id:userid},
+      {
+        $set:{
+          name:req.body.name,
+          email:req.body.email,
+          phone:req.body.phone,
+          lice:req.body.lice,
+          image:req.file.filename,
+
+        }
+      }).then(result=>{
+        console.log(result,".l;lklkpoisdfg__________");
+        res.redirect(`/profile/${userid}`);
+      })
+    
+   } catch (error) {
+    
+   }
+  }
 };
