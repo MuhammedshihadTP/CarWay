@@ -27,6 +27,10 @@ const vehiclesschma = new mongoose.Schema({
     type: String,
     required: true,
   },
+  booked:{
+    type:Boolean,
+    default:false
+  }
 });
 
 const vehicles = mongoose.model("vehicles", vehiclesschma, "vehicles");

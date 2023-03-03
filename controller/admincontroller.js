@@ -6,6 +6,7 @@ const { post } = require("../routers/adminRouter");
 const { render } = require("ejs");
 const coupenmodel = require("../models/coupenmodel.js");
 const usermodel = require("../models/UserModel");
+const bokingModel=require("../models/CheackOut")
 
 const { modelName } = require("../models/UserModel");
 
@@ -14,7 +15,7 @@ module.exports = {
     try {
       const adminid = req.session.admin;
       const allusers = await usermodel.count();
-      const bookingcount = await bookingModel.count();
+     const bookingcount= await bokingModel.count()
       const vehiclecount = await vehiclesmodel.count();
       const admin = await adminmodel.findOne({ _id: adminid });
       if (admin) {

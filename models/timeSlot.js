@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const timesloteschma = new mongoose.Schema({
   id: {
-    type: String,
+    type: Number,
   },
   name: {
     type: String,

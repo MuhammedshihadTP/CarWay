@@ -25,7 +25,9 @@ const {
   postCart,
   getavalabelcars,
   getprofilepage,
-  updateprofilepage
+  updateprofilepage,
+  search,
+  getcargrid
 } = require("../controller/Uercontroller");
 const router = Router();
 
@@ -39,7 +41,7 @@ router.get("/login", getlogin);
 router.post("/login", postlogin);
 router.get("/logout",userlogout);
 router.get('/prodect/:id',getproductdetails);
-router.get("/search",postsearch);
+router.get("/search",search);
 router.post("/Bookings",postbooking);
 router.get("/cheackout",getcheaackoutform);
 router.post("/cheackout",postpayment);
@@ -47,7 +49,9 @@ router.get("/Sucssus",getsucssuse);
 router.get("/failed",getfailed);
 router.get("/cart",getcartpage);
 router.post("/cart",postCart);
-// router.post("/cars",getavalabelcars)
+router.get("/cars", getcargrid);
+router.post("/cars",getavalabelcars)
 router.get("/profile/:id",getprofilepage);
-router.post("/Profile/:id",updateprofilepage)
+router.post("/Profile/:id",updateprofilepage);
+
 module.exports = router;

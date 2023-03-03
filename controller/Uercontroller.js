@@ -1,37 +1,34 @@
 const usersignup = require("../models/UserModel");
 const Usermodel = require("../models/UserModel");
-
 const bcrypt = require("bcrypt");
 const { exists, rawListeners, find, findOne } = require("../models/UserModel");
 const session = require("express-session");
 const { render } = require("ejs");
 const transporter = require("../mail/transporter");
 const { default: mongoose } = require("mongoose");
-const prodect = require("../models/prodect");
 const { query } = require("express");
 const vehiclesmodel = require("../models/vehicles");
 const { use } = require("../mail/transporter");
 const auth = require("../middleware/auth");
 const timeslotes = require("../models/timeSlot");
 const CheackoutModal = require("../models/CheackOut");
-const CartModel = require("../models/Cart");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
-  // homepage controller.......
+  // Homepage Controller-----------------
   home: async (req, res) => {
     try {
       const userid = req.session.log;
-      const vehicles = await vehiclesmodel.find();
+
       await Usermodel.findOne({ _id: userid }).then((user) => {
-        res.render("user/home", { user, vehicles });
+        res.render("user/home", { user });
       });
     } catch (error) {
       console.log(error);
     }
   },
 
-  // signup controller.......
+  // Signup Controller.......
   getsignup: (req, res) => {
     res.render("user/signup");
   },
@@ -63,6 +60,8 @@ module.exports = {
       console.log(error);
     }
   },
+
+  // OTP verification----------------------------------------
 
   getotpverification: async (req, res) => {
     try {
@@ -109,7 +108,8 @@ module.exports = {
       console.log(error);
     }
   },
-  // login controller.......
+  // Login Controllor------------------------------
+
   getlogin: (req, res) => {
     if (req.session.log) {
       res.redirect("/login");
@@ -149,7 +149,8 @@ module.exports = {
       console.log(error);
     }
   },
-  // prodect controller.......
+  // Prodect Controller------------------------------
+
   getproductdetails: async (req, res, auth) => {
     try {
       const id = req.params.id;
@@ -161,10 +162,11 @@ module.exports = {
         console.log(id, "--------dddddd----");
         console.log(user);
 
-        let prodects = await vehiclesmodel.findById({ _id: id });
-
-        console.log(prodects, "hiptodet");
-        res.render("user/prodect", { prodects, user });
+        await vehiclesmodel.findById({ _id: id }).then((prodects) => {
+          console.log(prodects, "hiptodet");
+          res.cookie("poroduct_id", JSON.stringify(prodects._id).split('"')[1]);
+          res.render("user/prodect", { prodects, user });
+        });
       } else {
         res.redirect("/login");
       }
@@ -173,49 +175,31 @@ module.exports = {
     }
   },
 
-  postsearch: async (req, res) => {
-    try {
-     
-      console.log(req.query.q);
+  // postsearch: async (req, res) => {
+  //   try {
 
-      const agg = [
-        { $search: { autocomplete: { query: req.query.q, path: "name" } } },
-        { $limit: 10 },
-        { $project: { name: 1} },
-      ];
-      
+  //     console.log(req.query.q);
 
-      const result = await vehiclesmodel.aggregate(agg);
-      console.log(result);
-      res.json({ result });
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  //     const agg = [
+  //       { $search: { autocomplete: { query: req.query.q, path: "name" } } },
+  //       { $limit: 10 },
+  //       { $project: { name: 1} },
+  //     ];
 
-  getcheaackoutform: async (req, res, auth) => {
-    try {
-   
-      const user = req.session.log;
-      const username = req.session.log.name;
-      const email = req.session.log.email;
-      const cookiesid = req.cookies.booking_id;
-
-      console.log(username, email);
-      console.log(req.cookies.booking_id);
-      if (req.session.log) {
-        const time = await timeslotes.findOne({ _id: cookiesid });
-        console.log(time, "heloo");
-        res.render("user/checkout", { user, email, time, username });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
+  //     const result = await vehiclesmodel.aggregate(agg);
+  //     console.log(result);
+  //     res.json({ result });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
 
   postbooking: async (req, res) => {
-    console.log(req.body);
+    console.log(
+      req.body.id,
+      "mmkjijiooiu------------------------------------------------"
+    );
+
     const booking = new timeslotes({
       id: req.body.id,
       start: req.body.start,
@@ -238,12 +222,45 @@ module.exports = {
       });
   },
 
+  getcheaackoutform: async (req, res, auth) => {
+    try {
+      const user = req.session.log;
+      const username = req.session.log.name;
+      const email = req.session.log.email;
+      const cookiesid = req.cookies.booking_id;
+
+      console.log(username, email);
+      console.log(req.cookies.booking_id);
+      const prodectId = await req.cookies.poroduct_id;
+      console.log(prodectId, "______-------- ------------____");
+
+      if (req.session.log) {
+        const time = await timeslotes.findOne({ _id: cookiesid });
+        const helooo = await vehiclesmodel.findById(prodectId);
+        await vehiclesmodel.updateOne(helooo, {
+          $set: {
+            booked: true,
+          },
+        });
+        console.log(helooo, "------------eqq-wqeqwe-ewq-");
+
+        // const time = await timeslotes.findOne({ _id: cookiesid });
+        console.log(time, "heloo");
+        res.render("user/checkout", { user, email, time, username });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  // PaymentControlller-------------------------------------
+
   postpayment: async (req, res) => {
     const { vehicles } = req.body;
     console.log(vehicles, "DONE");
     const cheack = new CheackoutModal(vehicles);
     cheack.save().then((result) => {
-      console.log(result);
+      // console.log(result);
     });
 
     const session = await stripe.checkout.sessions.create({
@@ -264,7 +281,7 @@ module.exports = {
       success_url: `${process.env.APP_URL}/Sucssus`,
       cancel_url: `${process.env.APP_URL}/failed`,
     });
-    console.log(session);
+    // console.log(session);
     // res.redirect(session.url)
     res.json({ url: session.url });
   },
@@ -283,37 +300,21 @@ module.exports = {
       console.log(error);
     }
   },
-  //  Cartntroller.......
+
+  //  CartntRoller----------------------
+
   postCart: async (req, res) => {
     try {
       console.log(req.body.id, "helloo--------------");
-      // const {name}=usersignup;
-      // console.log(name);
-      let prodect = await vehiclesmodel.findById(req.body.id);
-      console.log(prodect);
-      let addtocart = await Usermodel.addCart();
-      console.log(addtocart);
-
-      // let vehicles = []
-      // const cart = req.body;
-      // console.log(req.body, "hello--------------------");
-      // console.log(cart, "helllo");
-      // const id = req.session.log._id
-      // console.log(id, req.body, "helooo");
-      // const user = await usersignup.findById({ _id: id });
-      // console.log(user);
-      // const alreadyExistCart = await CartModel.findOne({ orderdby: user._id })
-      // console.log(user._id);
-      // if (alreadyExistCart) {
-      //   alreadyExistCart.remove()
-      // }
-      // for (let i = 0; i < cart.length; i++) {
-      //   let object = {}
-      //   object.vehicle = cart[i]._id
-      //   object.price = cart[i].total
-      //   vehicles.push(object);
-      // }
-      // console.log(vehicles, "done");
+    const id = req.session.log._id;
+     const Bprodect=req.body
+     const user=await Usermodel.findById(id)
+     let prodect=await vehiclesmodel.findById(req.body.id)
+     console.log(prodect);
+     await user.addCart(prodect,Bprodect)
+     res.redirect("/home")
+     
+    
     } catch (error) {
       console.log(error);
     }
@@ -322,61 +323,120 @@ module.exports = {
     try {
       if (req.session.log) {
         const user = req.session.log;
+
         res.render("user/cart", { user });
+      } else {
+        res.redirect("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  // CarGrid---------------------
+
+  getcargrid: async (req, res) => {
+    try {
+      if (req.session.log) {
+        const user = req.session.log;
+        const vehicles = await vehiclesmodel.find();
+        res.render("user/prodeuctgrid", { vehicles, user });
       } else {
         res.redirect("/login");
       }
     } catch (error) {}
   },
 
-  // getavalabelcars: async(req,res)=>{
-  //   const { startDate, endDate } = req.body;
-  //   console.log(req.body);
+  getavalabelcars: async (req, res) => {
+    if (req.session.log) {
+      const { startDate, endDate } = req.body;
+      console.log(req.body);
+      const user = req.session.log;
+      const vehicles = await vehiclesmodel.find();
+      CheackoutModal.find({
+        availability: {
+          $elemMatch: {
+            start: { $lte: endDate },
+            end: { $gte: startDate },
+            isAvailable: true,
+          },
+        },
+      })
+        .then((availableCars) => {
+          res.redirect("/cars");
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send("Internal server error");
+        });
+    } else {
+      res.redirect("/login");
+    }
+  },
 
-  //   CheackoutModal.find({ availability: { $elemMatch: { start: { $lte: endDate }, end: { $gte: startDate }, isAvailable: true } } })
-  //   .then(availableCars => {
-  //     res.render('user/prodeuctgrid', { availableCars, startDate, endDate });
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //     res.status(500).send('Internal server error');
-  //   });
-
-  // },
+  // User_Profile-------------------------
 
   getprofilepage: async (req, res) => {
     try {
       const userid = req.params.id;
       const userdetailes = await Usermodel.findById({ _id: userid });
-      res.render("user/profile",{ userdetailes });
+      res.render("user/profile", { userdetailes });
     } catch (error) {
       console.log(error);
-
     }
   },
 
-  updateprofilepage:async(req,res)=>{
-   try {
-    const userid = req.params.id;
-    console.log(userid);
-    console.log('shihad' );
-    await Usermodel.updateOne({_id:userid},
-      {
-        $set:{
-          name:req.body.name,
-          email:req.body.email,
-          phone:req.body.phone,
-          lice:req.body.lice,
-          image:req.file.filename,
-
+  updateprofilepage: async (req, res) => {
+    try {
+      const userid = req.params.id;
+      console.log(userid);
+      console.log("shihad");
+      await Usermodel.updateOne(
+        { _id: userid },
+        {
+          $set: {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            lice: req.body.lice,
+            image: req.file.filename,
+            address: req.body.address,
+          },
         }
-      }).then(result=>{
-        console.log(result,".l;lklkpoisdfg__________");
+      ).then((result) => {
+        console.log(result, ".l;lklkpoisdfg__________");
         res.redirect(`/profile/${userid}`);
-      })
-    
-   } catch (error) {
-    
-   }
-  }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  // Search_Product-----------------------------------
+
+  search: async (req, res) => {
+    try {
+      const user = req.session.log;
+      console.log(req.query.search);
+      console.log();
+      const agg = [
+        {
+          $search: { autocomplete: { query: req.query.search, path: "name" } },
+        },
+        { $limit: 10 },
+        { $project: { name: 1 } },
+      ];
+      const result = await vehiclesmodel.aggregate(agg);
+      console.log(result);
+      const vehicleid = result.map((items) => items._id);
+      console.log(vehicleid);
+      const vehicles = await vehiclesmodel.find({ _id: vehicleid });
+      console.log(vehicles);
+
+      res.render("user/prodeuctgrid", { user, vehicles });
+      // res.json({ result });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

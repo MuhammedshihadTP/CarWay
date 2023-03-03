@@ -40,6 +40,9 @@ const CheackoutSchma = new mongoose.Schema({
     type: Date,
 
   },
+  id:{
+    type:String
+  },
 
   isAvailable: {
     type: Boolean,
