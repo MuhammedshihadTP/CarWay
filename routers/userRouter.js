@@ -1,24 +1,18 @@
 const { Router } = require("express");
 const express = require("express");
-const authentication=require("../middleware/auth")
+const authentication = require("../middleware/auth");
 const {
   home,
-  signup,
   getsignup,
   postsignup,
   getlogin,
   postlogin,
   userlogout,
-  getopt,
   otpverification,
   getotpverification,
   getproductdetails,
-  postsearch,
-  getbookingform,
   postbooking,
   postpayment,
-  getcartpage,
-  addToCart,
   getcheaackoutform,
   getsucssuse,
   getfailed,
@@ -27,31 +21,38 @@ const {
   getprofilepage,
   updateprofilepage,
   search,
-  getcargrid
+  getcargrid,
+  showCart,
+  Remoecart,
+  CoupencheackOut,
+  CartCheackOut,
 } = require("../controller/Uercontroller");
 const router = Router();
 
 router.get("/", home);
-router.get("/home",home);
+router.get("/home", home);
 router.get("/signup", getsignup);
 router.post("/signup", postsignup);
-router.post("/otp",otpverification);
-router.get('/otp',getotpverification);
+router.post("/otp", otpverification);
+router.get("/otp", getotpverification);
 router.get("/login", getlogin);
 router.post("/login", postlogin);
-router.get("/logout",userlogout);
-router.get('/prodect/:id',getproductdetails);
-router.get("/search",search);
-router.post("/Bookings",postbooking);
-router.get("/cheackout",getcheaackoutform);
-router.post("/cheackout",postpayment);
-router.get("/Sucssus",getsucssuse);
-router.get("/failed",getfailed);
-router.get("/cart",getcartpage);
-router.post("/cart",postCart);
+router.get("/logout", userlogout);
+router.get("/prodect/:id", getproductdetails);
+router.get("/search", search);
+router.post("/Bookings", postbooking);
+router.get("/cheackout", getcheaackoutform);
+router.post("/cheackout", postpayment);
+router.get("/Sucssus", getsucssuse);
+router.get("/failed", getfailed);
+router.get("/cart", showCart);
+router.post("/cart", postCart);
+router.post("/coupen",CoupencheackOut)
+router.get("/ChEackout/:id",CartCheackOut)
 router.get("/cars", getcargrid);
-router.post("/cars",getavalabelcars)
-router.get("/profile/:id",getprofilepage);
-router.post("/Profile/:id",updateprofilepage);
+router.post("/cars", getavalabelcars);
+router.get("/profile/:id", getprofilepage);
+router.post("/Profile/:id", updateprofilepage);
+router.get('/Cartremove/:id',Remoecart)
 
 module.exports = router;

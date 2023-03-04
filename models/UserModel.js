@@ -38,34 +38,64 @@ const userschema = new mongoose.Schema({
   cart: {
     items: [
       {
-        product_id: {
-          type: String,
+        productId: {
+          type: mongoose.Types.ObjectId,
           ref: "vehicles",
-        
+          // required:true
         },
-        Totalprice: {
+        price: {
           type: Number,
-        
+        },
+
+        Trate: {
+          type: Number,
+        },
+
+        strattime: {
+          type: String,
+        },
+        endtime: {
+          type: String,
         },
       },
     ],
     totalPrice: {
       type: Number,
     },
-    // resetToken: String,
-    // resetTokenExpiration: Date,
   },
 });
 
-userschema.methods.addCart = async function (prodect,prodectdetails) {
-  console.log( prodect._id);
+userschema.methods.addCart = async function (prodect, timeslo) {
+  console.log(prodect._id);
   let cart = this.cart;
-  if (cart.items.length == 0) {
-    cart.items.push({ prodect_id: prodect._id, price: prodectdetails.total });
-    cart.totalPrice = prodectdetails.total;
+  // if (cart.items.length == 0) {
+  //   cart.items.push({ productId:prodect._id, price:prodect.price});
+  //   cart.totalPrice =timeslo.total;
+  // } else {
+  // }
+
+  const isExisting = cart.items.findIndex(
+    (objItems) => objItems.productId == prodect._id
+  );
+  const product = await vehicles.findOne({ _id: prodect._id });
+  console.log(product);
+  if (isExisting >= 0) {
+    cart.items[isExisting].qty += 1;
   } else {
+    cart.items.push({
+      productId: prodect._id,
+      price: prodect.price,
+      strattime: timeslo.start,
+      endtime: timeslo.end,
+      Trate: timeslo.total,
+    });
   }
+  if (!cart.totalPrice) {
+    cart.totalPrice = 0;
+  }
+  cart.totalPrice += timeslo.total;
   console.log("user in schma :", this);
+
   return this.save();
 };
 

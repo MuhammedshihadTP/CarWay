@@ -12,6 +12,7 @@ const { use } = require("../mail/transporter");
 const auth = require("../middleware/auth");
 const timeslotes = require("../models/timeSlot");
 const CheackoutModal = require("../models/CheackOut");
+const coupun = require("../models/coupenmodel");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 module.exports = {
@@ -306,25 +307,32 @@ module.exports = {
   postCart: async (req, res) => {
     try {
       console.log(req.body.id, "helloo--------------");
-    const id = req.session.log._id;
-     const Bprodect=req.body
-     const user=await Usermodel.findById(id)
-     let prodect=await vehiclesmodel.findById(req.body.id)
-     console.log(prodect);
-     await user.addCart(prodect,Bprodect)
-     res.redirect("/home")
-     
-    
+      const id = req.session.log._id;
+      const Bprodect = req.body;
+      console.log(Bprodect);
+      const user = await Usermodel.findById(id);
+      let prodect = await vehiclesmodel.findById(req.body.id);
+      console.log(prodect, "-----------------------");
+      await user.addCart(prodect, Bprodect);
+      res.redirect("/home");
     } catch (error) {
       console.log(error);
     }
   },
-  getcartpage: async (req, res) => {
+  showCart: async (req, res) => {
     try {
       if (req.session.log) {
         const user = req.session.log;
+        const userId = req.session.log._id;
+        const findUser = await Usermodel.findById(userId);
+        const cartz = await findUser.populate("cart.items.productId");
 
-        res.render("user/cart", { user });
+        const Coupons = await coupun.find({
+          Available: { $gt: 0 },
+        });
+        // res.send(CoupenData);
+        console.log(cartz);
+        res.render("user/cart", { user, cartz, Coupons });
       } else {
         res.redirect("/login");
       }
@@ -333,6 +341,88 @@ module.exports = {
     }
   },
 
+  Remoecart: async (req, res) => {
+    const cartId = req.params.id;
+    console.log(cartId);
+    const userId = req.session.log._id;
+    const productz = await vehiclesmodel.findById({ _id: cartId });
+    const Userfind = await Usermodel.findById(userId);
+
+    const index = await Userfind.cart.items.findIndex(
+      (obj) => obj.productId == cartId
+    );
+    let value = null;
+    if (index >= 0) {
+      value = Userfind.cart.items[index].Trate;
+    }
+
+    const PricE = Userfind.cart.totalPrice;
+
+    console.log(
+      Userfind.cart.totalPrice,
+      "shihaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad"
+    );
+
+    // console.log(dec,'-----------------------good----------');
+    await Usermodel.updateOne(
+      { _id: userId },
+      { $pull: { "cart.items": { productId: cartId } } }
+    );
+    Userfind.cart.totalPrice = PricE - value;
+    await Userfind.save();
+    res.redirect("/cart");
+  },
+
+  CoupencheackOut: async (req, res, next) => {
+    try {
+      const UserId = req.session.log._id;
+      const { Code } = req.body.Coupen;
+      const { Totale } = req.body.Coupen;
+      console.log(Code, Totale, UserId, "helooCoupen----------------");
+      if (Code !== "") {
+        const coupons = await coupun.findOne({ code: Code });
+        if (!coupons) {
+          console.log("cod inavlid");
+        }
+        const index = await coupons.userUsed.findIndex(
+          (obj) => obj.userId == UserId
+        );
+        if (index >= 0) {
+          console.log("user exist");
+        } else {
+         
+           await coupun.updateOne(
+            { code: Code },
+            { $push: { userUsed: { userId: UserId } } }
+          );
+          const disCountRate = await coupun.find({ code: Code });
+          const User= await Usermodel.findOne({_id:UserId});
+          if(!User){
+            console.log("User Not Found");
+          }
+          console.log(disCountRate[0].amount,"-----------------");
+          User.cart.totalPrice -= disCountRate[0].amount
+          await User.save()
+          console.log(User.cart.totalPrice);
+        }
+
+      }  
+    
+    } catch (error) {}
+  },
+
+  CartCheackOut:async(req,res)=>{
+  try {
+    const UserId=req.session.log._id
+    const useer = await Usermodel.findOne({ _id: UserId }).populate('cart.items.productId')
+    console.log(useer,);
+    res.render("user/cartCheackout",{useer})
+    
+  } catch (error) {
+    
+  }
+    
+  },
   // CarGrid---------------------
 
   getcargrid: async (req, res) => {
@@ -373,6 +463,8 @@ module.exports = {
       res.redirect("/login");
     }
   },
+
+  // COUPEN Area--------------------------
 
   // User_Profile-------------------------
 

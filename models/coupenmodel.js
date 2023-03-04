@@ -1,37 +1,47 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
 
-const coupenschema= new  mongoose.Schema({
-    code: {
+const coupenschema = new mongoose.Schema({
+  code: {
+    type: String,
+    require: true,
+    unique: true
+  },
+  Available: {
+    type: Number
+  },
+  Status: {
+    type: String,
+    default: 'Active'
+  },
+  amount: {
+    type: Number,
+    required: true
+  },
+  expireAfter: {
+    type: String
+  },
+  usageLimit: {
+    type: Number
+  },
+  minCartAmount: {
+    type: Number
+  },
+
+  userUsed: [
+    {
+      userId: {
         type: String,
-        require: true,
-        unique: true
-      },
-      Available: {
-        type: Number
-      },
-      Status: {
-        type: String,
-        default: 'Active'
-      },
-      amount: {
-        type: Number,
-        required: true
-      },
-      expireAfter: {
-        type:String
-      },
-      usageLimit: {
-        type: Number
-      },
-      minCartAmount: {
-        type: Number
-      },
-      // maxDiscountAmount: {
-      //   type: Number
-      // }
-});
+        ref: 'signup'
+      }
+    }
+  ]
+}, { timestamps: true })
+// maxDiscountAmount: {
+//   type: Number
+// }
 
-const coupen=mongoose.model("coupen",coupenschema,"coupen");
-module.exports=coupen;
+
+const coupen = mongoose.model("coupen", coupenschema, "coupen");
+module.exports = coupen;
 
