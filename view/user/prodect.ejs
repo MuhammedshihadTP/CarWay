@@ -164,11 +164,11 @@
                     Add to cart
                   </button>
 
-                  <button type="button">
+                  <!-- <button type="button">
                     <a class="btn" id="buy" onclick="clicked()">Book Now</a>
 
 
-                  </button>
+                  </button> -->
                   <i class="fa fa-heart text-muted"></i>
                   <i class="fa fa-share-alt text-muted"></i>
                 </div>
@@ -273,6 +273,7 @@
       const to = document.getElementById("end").value;
       const total = document.getElementById('totale').innerText
       const name = document.getElementById("name").innerText
+      
       console.log(from, to, total, name);
 
       fetch(`http://localhost:3000/cart`, {
@@ -289,7 +290,7 @@
           total: parseInt(total),
           name: name
         })
-      }).then(() => window.location.href = '/home');
+      }).then(() => window.location.href = '/cart');
 
     } else {
       alert("dhfgjhkjl;ljkhjghgdf")

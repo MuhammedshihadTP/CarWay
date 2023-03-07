@@ -1,93 +1,280 @@
 <section class="shop checkout section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-12">
-          <div class="checkout-form">
-            <h2>Make Your Checkout Here</h2>
-            <p>Please register in order to checkout more quickly</p>
-            <!-- Form -->
-            <form class="form" method="post" action="">
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="form-group">
-                    <label>Full name<span>*</span></label>
-                    <input type="text"  id="fullname" value="" required="required" />
-                  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-12">
+        <div class="checkout-form">
+          <h2>Make Your Checkout Here</h2>
+          <p>Please register in order to checkout more quickly</p>
+
+
+          <!-- Form -->
+
+          <div class="row my-5 container">
+            <h3 class="fs-4 mb-3">Your Order</h3>
+            <div class="col">
+              <table class="table bg-white rounded shadow-sm table-hover">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col" width="50">#</th> -->
+                    <th scope="col">Vhicle Name</th>
+
+                    <th scope="col">Hour Price</th>
+
+                    <th scope="col">Price</th>
+
+                    <th scope="col">from</th>
+                    <th scope="col">To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(let i=0;i<useer.cart.items.length;i++){  %>
+                  <% let cartItems = useer.cart.items[i] %>
+
+                  <tr>
+                    <!-- <th scope="row"></th> -->
+                    <td id="vname"><%=cartItems.productId.name%></td>
+                    <td><%=cartItems.productId.price%></td>
+                    <td id="Trate"><%=cartItems.Trate%></td>
+                    <td id="start"><%=cartItems.strattime%></td>
+                    <td id="end"><%=cartItems.endtime %></td>
+
+                    <!-- <td></td> -->
+
+                  </tr>
+                  <% } %>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <form class="form" method="post" action="">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Full name<span>*</span></label>
+                  <input type="text" id="fullname" value="<%=useer.name %>" required="required" />
                 </div>
-  
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="form-group">
-                    <label>Email Address<span>*</span></label>
-                    <input type="email"  id="email" value="" required="required" />
-                  </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Email Address<span>*</span></label>
+                  <input type="email" id="email" value="<%=useer.email %>" required="required" />
                 </div>
-                <!-- <div class="col-lg-6 col-md-6 col-12">
+              </div>
+              <!-- <div class="col-lg-6 col-md-6 col-12">
                   <div class="form-group">
                     <label>Vehicle Name<span>*</span></label>
                     <input type="text" name="vehiclename" id="vehiclename" value="" required="required" />
                   </div>
                 </div> -->
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="form-group">
-                    <label>Phone Number<span>*</span></label>
-                    <input type="tel" maxlength="10"  id="number" placeholder="" required="required" />
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="form-group">
-                    <label>Address <span>*</span></label>
-                    <input type="text"  id="address" placeholder="" required="required" />
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="form-group">
-                    <label>Licence Number<span>*</span></label>
-                    <input type="text" id="Lice" placeholder="" required="required" />
-                  </div>
-                </div>
-            
-  
-                <div class="col-lg-6 col-md-6 col-12">
-                  <div class="order-details">
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                      <h2>TOTALS</h2>
-                      <div class="content">
-                        <ul>
-                          <li>Vehicle Name:<span id="Vname"></span></li>
-                          <li>From :<span id="start"></span></li>
-                          <li>To :<span id="End"></span></li>
-  
-                          <li class="last">Total Amount : ₹<span id="totale"> </span></li>
-                        </ul>
-                      </div>
-                    </div>
-  
-                    <div class="single-widget payement">
-                      <div class="content">
-                        <img src="/images/payment-method.png" alt="#" />
-                      </div>
-                    </div>
-                    <!--/ End Payment Method Widget -->
-                    <!-- Button Widget -->
-                    <div class="single-widget get-button">
-                      <div class="content">
-                        <div class="button">
-                          <a ><button id="checkout"  type="button"   class="btn">proceed to
-                              checkout</button></a>
-                        </div>
-                      </div>
-                    </div>
-                    <!--/ End Button Widget -->
-                  </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Phone Number<span>*</span></label>
+                  <input type="tel" maxlength="10" id="number" placeholder="" value="<%=useer.phone %>" required="required" />
                 </div>
               </div>
-          </div>
-          </form>
-          <!--/ End Form -->
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Address <span>*</span></label>
+                  <input type="text" id="address" placeholder="" value="<%=useer.address %>" required="required" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                  <label>Licence Number<span>*</span></label>
+                  <input type="text" id="Lice" placeholder="" <%=useer.lice %> required="required" />
+                  <input type="text" name="userId" id="userId" value="<%=useer._id %>">
+                </div>
+              </div>
+
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="order-details">
+                  <!-- Order Widget -->
+                  <div class="single-widget">
+                    <h2>TOTALS</h2>
+                    <div class="content">
+                      <ul>
+                        <!-- <li>Vehicle Name:<span id="Vname"></span></li>
+                          <li>From :<span id="start"></span></li>
+                          <li>To :<span id="End"></span></li> -->
+
+                        <li class="last">Total Amount : ₹<span id="totale"><%=useer.cart.totalPrice %></span></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="single-widget payement">
+                    <div class="content">
+                      <img src="/images/payment-method.png" alt="#" />
+                    </div>
+                  </div>
+                  <!--/ End Payment Method Widget -->
+                  <!-- Button Widget -->
+                  <div class="single-widget get-button">
+                    <div class="content">
+                      <div class="button">
+                        <a><button id="checkout" type="button" onclick="clicked('<%=useer._id%>')" class="btn">proceed to
+                            checkout</button></a>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/ End Button Widget -->
+                </div>
+              </div>
+            </div>
         </div>
+        </form>
+        <!--/ End Form -->
       </div>
-  
     </div>
-    </div>
-  </section>
+
+  </div>
+  </div>
+</section>
+<style>
+  table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+  }
+
+  table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+  }
+
+  table th,
+  table td {
+    padding: .625em;
+    text-align: center;
+  }
+
+  table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 600px) {
+    table {
+      border: 0;
+    }
+
+    table caption {
+      font-size: 1.3em;
+    }
+
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: .625em;
+    }
+
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+    }
+
+    table td::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>
+
+
+<script>
+  function clicked(id) {
+    const vName = document.getElementById("vname").innerHTML
+    const Trate = document.getElementById("Trate").innerHTML
+    const start = document.getElementById("start").innerHTML
+    const end = document.getElementById("end").innerHTML
+    const Email = document.getElementById("email").value;
+    const phoneNo = document.getElementById("number").value;
+    const Address = document.getElementById("address").value;
+    const lice = document.getElementById('Lice').value;
+    const Name = document.getElementById("fullname").value;
+    const total = document.getElementById("totale").innerHTML
+    const userId = document.getElementById("userId").value;
+
+    console.log(vname, Trate, start, end, Email, phoneNo, Address, lice, Name);
+    if (Name !== '' && Email !== '' && Address !== '' && phoneNo !== '' && lice !== '') {
+      fetch(`http://localhost:3000/ChEackout/${id}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          Product: {
+            email: Email,
+            address: Address,
+            lice: lice,
+            id: userId
+          }
+        })
+
+      }).then(function(response) {
+        console.log(response, "paym");
+        return response.json().then(json => Promise.resolve(json))
+
+      }).then(({
+        url
+      }) => {
+        console.log(url, "done");
+        window.location = url
+      }).catch(error => {
+        console.log(error.url, "koyappam");
+      })
+
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Fill The Details'
+      })
+
+    }
+
+  }
+</script>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const vehicles = require("./vehicles");
-const Cheackout = require("./CheackOut");
+
 
 const userschema = new mongoose.Schema({
   name: {
@@ -41,7 +41,6 @@ const userschema = new mongoose.Schema({
         productId: {
           type: mongoose.Types.ObjectId,
           ref: "vehicles",
-          // required:true
         },
         price: {
           type: Number,
@@ -57,6 +56,7 @@ const userschema = new mongoose.Schema({
         endtime: {
           type: String,
         },
+        vname: {},
       },
     ],
     totalPrice: {
@@ -74,13 +74,14 @@ userschema.methods.addCart = async function (prodect, timeslo) {
   // } else {
   // }
 
-  const isExisting = cart.items.findIndex(
-    (objItems) => objItems.productId == prodect._id
+  const isExisting = await cart.items.findIndex(
+    (objItems) => objItems.productId.toString() === prodect._id.toString()
   );
+  console.log(isExisting, "heloooo");
   const product = await vehicles.findOne({ _id: prodect._id });
   console.log(product);
   if (isExisting >= 0) {
-    cart.items[isExisting].qty += 1;
+    console.log("already Exist");
   } else {
     cart.items.push({
       productId: prodect._id,
@@ -88,15 +89,25 @@ userschema.methods.addCart = async function (prodect, timeslo) {
       strattime: timeslo.start,
       endtime: timeslo.end,
       Trate: timeslo.total,
+      vname: timeslo.name,
     });
+    if (!cart.totalPrice) {
+      cart.totalPrice = 0;
+    }
+    cart.totalPrice += timeslo.total;
+    console.log("else");
   }
-  if (!cart.totalPrice) {
-    cart.totalPrice = 0;
-  }
-  cart.totalPrice += timeslo.total;
   console.log("user in schma :", this);
-
   return this.save();
+};
+userschema.methods.count = function () {
+  const cart = this.cart;
+  if (cart.items.length !== 0) {
+    const count = cart.items.length;
+    return count;
+  } else {
+    return 0;
+  }
 };
 
 const usersignup = mongoose.model("signup", userschema, "signup");

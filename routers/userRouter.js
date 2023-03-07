@@ -11,9 +11,6 @@ const {
   otpverification,
   getotpverification,
   getproductdetails,
-  postbooking,
-  postpayment,
-  getcheaackoutform,
   getsucssuse,
   getfailed,
   postCart,
@@ -26,9 +23,10 @@ const {
   Remoecart,
   CoupencheackOut,
   CartCheackOut,
+  PaymentCheacOut,
+  myBookings,
 } = require("../controller/Uercontroller");
 const router = Router();
-
 router.get("/", home);
 router.get("/home", home);
 router.get("/signup", getsignup);
@@ -40,19 +38,17 @@ router.post("/login", postlogin);
 router.get("/logout", userlogout);
 router.get("/prodect/:id", getproductdetails);
 router.get("/search", search);
-router.post("/Bookings", postbooking);
-router.get("/cheackout", getcheaackoutform);
-router.post("/cheackout", postpayment);
 router.get("/Sucssus", getsucssuse);
 router.get("/failed", getfailed);
 router.get("/cart", showCart);
 router.post("/cart", postCart);
 router.post("/coupen",CoupencheackOut)
 router.get("/ChEackout/:id",CartCheackOut)
+router.post("/ChEackout/:id",PaymentCheacOut);
 router.get("/cars", getcargrid);
 router.post("/cars", getavalabelcars);
 router.get("/profile/:id", getprofilepage);
 router.post("/Profile/:id", updateprofilepage);
-router.get('/Cartremove/:id',Remoecart)
-
+router.get('/Cartremove/:id',Remoecart);
+router.get('/oders',myBookings);
 module.exports = router;

@@ -7,44 +7,27 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
-                              <input class="file-upload" type="file" accept="image/*"/>
-                              <i class="fa fa-camera upload-button">
-                                
-                              </i> -->
-
                 <div class="row">
-                  <!-- <div class="small-12 medium-2 large-2 columns">
-                                    <div class="circle">
-                                      <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
-                               
-                                    </div>
-                                    <div class="p-image">
-                                      <i class="fa fa-camera upload-button"></i>
-                                       <input class="file-upload" type="file" accept="image/*"/>
-                                    </div>
-                                 </div> -->
                   <div class="avatar-upload">
                     <div class="avatar-edit">
-                      <input type="file" id="imageUpload" name="image" />
-                      <i class="fa fa-camera upload-button"> </i>
+                     <i class="fa fa-camera  upload-buttoun  " style="size: 100%; margin-top: 3.5em;"> <input type="file"id="imageUpload" name="image" ></i>
                     </div>
-                    <h6 class="text-center">Your Profile</h6>
-                    <div class="avatar-preview">
+
+                    <h3 class="text-center">Your Profile</h3>
+                    <div class="avatar-preview" style="margin-top: 1em;">
                       <div id="imagePreview" style="background-image: url('../images/<%=userdetailes.image%>');">
                       </div>
-                    </div>
+                    </div>  
+                  
                   </div>
                 </div>
 
                 <div class="mt-3">
                   <h4><%=userdetailes.name%></h4>
-                  <p class="text-secondary mb-1">Full Stack Developer</p>
+                  <!-- <p class="text-secondary mb-1">Full Stack Developer</p> -->
                   <p class="text-muted font-size-sm">
                     <%=userdetailes.address%>
                   </p>
-                  <!-- <button class="btn btn-primary">Follow</button>
-                                  <button class="btn btn-outline-primary">Message</button> -->
                 </div>
               </div>
               <hr class="my-4" />
@@ -69,7 +52,7 @@
                   <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" name="email" value="<%=userdetailes.email%>" required />
+                  <input type="email" class="form-control" name="email" value="<%=userdetailes.email%>" required  readonly />
                 </div>
               </div>
               <div class="row mb-3">
@@ -79,15 +62,15 @@
                 </div>
                 <div class="col-sm-9 text-secondary">
 
-                  <input type="number" name="phone" class="form-control" value="" />
+                  <input type="number" name="phone" class="form-control" value="<%=userdetailes.phone %>" required maxlength="10" />
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Mobile</h6>
+                  <h6 class="mb-0">Licence number</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="number" class="form-control" value="<%=userdetailes.phone %>" name="lice" required />
+                  <input type="number" class="form-control" value="<%=userdetailes.lice %>" name="lice" required />
                 </div>
               </div>
               <div class="row mb-3">
@@ -95,7 +78,7 @@
                   <h6 class="mb-0">Address</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" class="form-control" name="address" value="Bay Area, San Francisco, CA" required />
+                  <input type="text" class="form-control" name="address" value="<%=userdetailes.address %>" required />
                 </div>
               </div>
               <div class="row">
@@ -204,4 +187,22 @@
     background-repeat: no-repeat;
     background-position: center;
   }
+  .fa-camera {
+    position: relative;
+    overflow: hidden;
+}
+.upload-buttoun input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: inherit;
+    display: block;
+}
 </style>

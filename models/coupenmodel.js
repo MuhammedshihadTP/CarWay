@@ -37,9 +37,7 @@ const coupenschema = new mongoose.Schema({
     }
   ]
 }, { timestamps: true })
-// maxDiscountAmount: {
-//   type: Number
-// }
+
 
 
 const coupen = mongoose.model("coupen", coupenschema, "coupen");
