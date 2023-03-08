@@ -56,7 +56,9 @@ const userschema = new mongoose.Schema({
         endtime: {
           type: String,
         },
-        vname: {},
+        vname: {
+          type:String
+        },
       },
     ],
     totalPrice: {

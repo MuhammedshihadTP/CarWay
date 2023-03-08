@@ -159,6 +159,8 @@
                     </ul>
                   </div>
                 </div>
+
+                <% if(!prodects.booked){ %>
                 <div class="cart mt-4 align-items-center">
                   <button type="button" onclick="addtocart()" class="btn text-uppercase mr-2 px-4">
                     Add to cart
@@ -172,6 +174,9 @@
                   <i class="fa fa-heart text-muted"></i>
                   <i class="fa fa-share-alt text-muted"></i>
                 </div>
+                <% }else{ %>
+                  <h3>Not Available</h3>
+                  <% } %>
               </form>
 
             </div>

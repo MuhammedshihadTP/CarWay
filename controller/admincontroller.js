@@ -15,12 +15,12 @@ module.exports = {
     try {
       const adminid = req.session.admin;
       const allusers = await usermodel.count();
-    
+
       const vehiclecount = await vehiclesmodel.count();
       const admin = await adminmodel.findOne({ _id: adminid });
       if (admin) {
         res.render("admin/admindshbord", {
-       
+
           vehiclecount,
           allusers,
         });
@@ -109,12 +109,12 @@ module.exports = {
   getdashbord: async (req, res) => {
     try {
       const allusers = await usermodel.count();
-      const bookingcount = await bookingModel.count();
+    
       const vehiclecount = await vehiclesmodel.count();
       const adminid = req.session.admin;
       if (adminid) {
         res.render("admin/admindshbord", {
-          bookingcount,
+          
           vehiclecount,
           allusers,
         });

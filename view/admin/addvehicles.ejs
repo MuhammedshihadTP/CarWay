@@ -9,15 +9,15 @@
           <form class="forms-sample" action="/admin/vehicles" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label for="exampleInputName1">Car Name</label>
-              <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name">
+              <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name"  required>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail3">Rc Number</label>
-              <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Rc Number" name="Rcnumber" name="rcnumber">
+              <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Rc Number" name="Rcnumber" name="rcnumber" required>
             </div>
             <div class="form-group">
               <label for="exampleInputPassword4">Model</label>
-              <input type="text" class="form-control" id="exampleInputPassword4" placeholder="Model" name="model">
+              <input type="text" class="form-control" id="exampleInputPassword4" placeholder="Model" name="model" required>
             </div>
             <!-- <div class="form-group">
               <label for="exampleSelectGender"></label>
@@ -28,7 +28,7 @@
             </div> -->
             <div class="form-group">
               <label>File upload</label>
-              <input type="file" name="image" class="file-upload-default">
+              <input type="file" name="image" class="file-upload-default" required>
               <div class="input-group col-xs-12">
                 <!-- <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" name="image">
                 <span class="input-group-append">
@@ -38,15 +38,15 @@
             </div>
             <div class="form-group">
               <label for="exampleInputCity1">City</label>
-              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location" name="location">
+              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location" name="location" required>
             </div>
             <div class="form-group">
               <label for="exampleInputCity1">Price</label>
-              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Price" name="price">
+              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Price" name="price" required>
             </div>
             <div class="form-group">
               <label for="exampleTextarea1">More Detailes</label>
-              <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis"></textarea>
+              <textarea class="form-control" id="exampleTextarea1" rows="4" name="moredetealis" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary mr-2" onclick="submited()">Submit</button>
             <button class="btn btn-dark">Cancel</button>
@@ -65,16 +65,18 @@
     //     el.classList.toggle("toggled");
     // };
 
-    function submited(){
-      Swal.fire({
-  position: 'center',
-  icon: 'success',
-  title: 'Successfuly Added',
-  showConfirmButton: false,
-  timer: 1500
+//     function submited(){
+    
 
-})
-    }
+//       Swal.fire({
+//   position: 'center',
+//   icon: 'success',
+//   title: 'Successfuly Added',
+//   showConfirmButton: false,
+//   timer: 1500
+
+// })
+//     }
 
 
 </script>

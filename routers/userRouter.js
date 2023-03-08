@@ -25,7 +25,12 @@ const {
   CartCheackOut,
   PaymentCheacOut,
   myBookings,
+  forgetPassword,
+  postforgetPassword,
+  resetPassword,
+  postresetPassword
 } = require("../controller/Uercontroller");
+
 const router = Router();
 router.get("/", home);
 router.get("/home", home);
@@ -42,7 +47,7 @@ router.get("/Sucssus", getsucssuse);
 router.get("/failed", getfailed);
 router.get("/cart", showCart);
 router.post("/cart", postCart);
-router.post("/coupen",CoupencheackOut)
+router.post("/coupen",CoupencheackOut);
 router.get("/ChEackout/:id",CartCheackOut)
 router.post("/ChEackout/:id",PaymentCheacOut);
 router.get("/cars", getcargrid);
@@ -51,4 +56,10 @@ router.get("/profile/:id", getprofilepage);
 router.post("/Profile/:id", updateprofilepage);
 router.get('/Cartremove/:id',Remoecart);
 router.get('/oders',myBookings);
+router.get('/forgetpassword',forgetPassword);
+router.post("/forgetpassword",postforgetPassword)
+router.get('/resetPassword/:id',resetPassword);
+router.post('/resetPassword',postresetPassword);
+
+
 module.exports = router;

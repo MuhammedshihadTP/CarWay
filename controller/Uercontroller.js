@@ -10,20 +10,16 @@ const { query } = require("express");
 const vehiclesmodel = require("../models/vehicles");
 const { use } = require("../mail/transporter");
 const auth = require("../middleware/auth");
-const timeslotes = require("../models/timeSlot");
-
 const coupun = require("../models/coupenmodel");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Order = require("../models/order");
-
 module.exports = {
+
   // Homepage Controller-----------------
+
   home: async (req, res) => {
     try {
-     
       const userid = req.session.log;
-
-
 
       await Usermodel.findOne({ _id: userid }).then((user) => {
         res.render("user/home", { user });
@@ -86,7 +82,7 @@ module.exports = {
         req.session.signup.Token = token;
         res.render("user/otp");
       }
-    } catch (error) { }
+    } catch (error) {}
   },
 
   otpverification: async (req, res) => {
@@ -180,17 +176,6 @@ module.exports = {
     }
   },
 
-
-
-
-  getfailed: async (req, res) => {
-    try {
-      res.render("user/failed");
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
   //  CartntRoller----------------------
 
   postCart: async (req, res) => {
@@ -252,7 +237,6 @@ module.exports = {
       "shihaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad"
     );
 
-
     await Usermodel.updateOne(
       { _id: userId },
       { $pull: { "cart.items": { productId: cartId } } }
@@ -271,7 +255,6 @@ module.exports = {
       if (Code !== "") {
         const coupons = await coupun.findOne({ code: Code });
         if (!coupons) {
-
           console.log("cod inavlid");
         }
         const index = await coupons.userUsed.findIndex(
@@ -280,7 +263,6 @@ module.exports = {
         if (index >= 0) {
           console.log("user exist");
         } else {
-
           await coupun.updateOne(
             { code: Code },
             { $push: { userUsed: { userId: UserId } } }
@@ -291,76 +273,51 @@ module.exports = {
             console.log("User Not Found");
           }
           console.log(disCountRate[0].amount, "-----------------");
-          User.cart.totalPrice -= disCountRate[0].amount
-          await User.save()
+          User.cart.totalPrice -= disCountRate[0].amount;
+          await User.save();
           console.log(User.cart.totalPrice);
         }
-
       }
-
-    } catch (error) { }
+    } catch (error) {}
   },
-
   CartCheackOut: async (req, res) => {
     try {
-      const UserId = req.session.log._id
-      const useer = await Usermodel.findOne({ _id: UserId }).populate('cart.items.productId')
-      console.log(useer,);
-      res.render("user/cartCheackout", { useer })
-
-    } catch (error) {
-
-    }
-
+      const UserId = req.session.log._id;
+      const useer = await Usermodel.findOne({ _id: UserId }).populate(
+        "cart.items.productId"
+      );
+      console.log(useer);
+      res.render("user/cartCheackout", { useer });
+    } catch (error) {}
   },
-
   PaymentCheacOut: async (req, res) => {
     try {
       // console.log(object);
-      const { Product } = req.body
-      const paramsId = req.params.id
+      const { Product } = req.body;
+      const paramsId = req.params.id;
       console.log(paramsId, "================Params");
 
       console.log(Product, "--------------------------");
-      const UserId = Product.id
-      const address = Product.address
-      const email = Product.email
-      const lice = Product.lice
+      const UserId = Product.id;
+      const address = Product.address;
+      const email = Product.email;
+      const lice = Product.lice;
       console.log(address);
-      const useer = await Usermodel.findOne({ _id: UserId })
+      const useer = await Usermodel.findOne({ _id: UserId });
       console.log(useer, "------------");
       const proDetails = useer.cart;
-      const orderDeatails = {
+      const Data = proDetails.items.map(({ vname }) => vname).join(",");
+      console.log(Data);
+      const metadata = {
         user_Id: UserId,
         address: address,
         email: email,
         lice: lice,
-        cart: proDetails,
-      }
-      const order = new Order(orderDeatails)
-      await order.save()
-      console.log(order);
-      console.log(paramsId, "90");
-      const Data = proDetails.items.map(({ vname }) => vname).join(',');
-      console.log(Data);
-      const idd=proDetails.items.map(({productId})=>productId);
-      console.log(idd);
-
-    //  const vId= await vehiclesmodel.find({ productId: { $in: idd } })
-    
-     const result = await vehiclesmodel.updateMany(
-      { _id: { $in: idd } },
-      { $set: { booked: true } } 
-    )
-
-    console.log(result,"gotit");
-
-
-
+        total_price: proDetails.totalPrice,
+      };
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [
-
           {
             price_data: {
               currency: "inr",
@@ -373,28 +330,73 @@ module.exports = {
           },
         ],
         mode: "payment",
-        success_url: `${process.env.APP_URL}/Sucssus`,
+        success_url: `${process.env.APP_URL}/Sucssus?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.APP_URL}/failed`,
+        metadata: metadata,
       });
 
       res.json({ url: session.url });
-      useer.cart.items = []
-      useer.cart.totalPrice = null
-      await useer.save()
     } catch (error) {
       console.log(error);
-
     }
   },
-
 
   getsucssuse: async (req, res) => {
     try {
-      res.render("user/Sucssus");
+      const session = await stripe.checkout.sessions.retrieve(
+        req.query.session_id
+      );
+      if (session.payment_status === "paid") {
+        const Product = session.metadata;
+        console.log(Product);
+        console.log(Product, "--------------------------");
+        const UserId = Product.user_Id;
+        const address = Product.address;
+        const email = Product.email;
+        const lice = Product.lice;
+        console.log(address);
+        const useer = await Usermodel.findOne({ _id: UserId });
+        console.log(useer, "------------");
+        const proDetails = useer.cart;
+        const orderDeatails = {
+          user_Id: UserId,
+          address: address,
+          email: email,
+          lice: lice,
+          cart: proDetails,
+        };
+        const order = new Order(orderDeatails);
+        await order.save();
+        console.log(order);
+        const Data = proDetails.items.map(({ vname }) => vname).join(",");
+        console.log(Data);
+        const idd = proDetails.items.map(({ productId }) => productId);
+        console.log(idd);
+        const result = await vehiclesmodel.updateMany(
+          { _id: { $in: idd } },
+          { $set: { booked: true } }
+        );
+        console.log(result, "gotit");
+        useer.cart.items = [];
+        useer.cart.totalPrice = null;
+        await useer.save();
+        res.render("user/Sucssus");
+      } else {
+        res.redirect("/failed");
+      }
     } catch (error) {
       console.log(error);
     }
   },
+
+  getfailed: async (req, res) => {
+    try {
+      res.render("user/failed");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   // CarGrid---------------------
 
   getcargrid: async (req, res) => {
@@ -406,7 +408,7 @@ module.exports = {
       } else {
         res.redirect("/login");
       }
-    } catch (error) { }
+    } catch (error) {}
   },
 
   getavalabelcars: async (req, res) => {
@@ -415,14 +417,11 @@ module.exports = {
       console.log(req.body);
       const user = req.session.log;
       const vehicles = await vehiclesmodel.find();
-      res.redirect('/cars')
-
+      res.redirect("/cars");
     } else {
       res.redirect("/login");
     }
   },
-
-  
 
   // User_Profile-------------------------
 
@@ -489,15 +488,81 @@ module.exports = {
       console.log(error);
     }
   },
-
-  myBookings:async(req,res)=>{
+  myBookings: async (req, res) => {
     try {
-      const UserId=req.session.log._id;
-      const order= await Order.find({user_Id:UserId})
-     res.render("user/orders",{order})
+      const UserId = req.session.log._id;
+      if(req.session.log){
+        const order = await Order.find({ user_Id: UserId });
+        res.render("user/orders", { order });
+
+      }else{
+        res.redirect("/login")
+      }
 
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+  forgetPassword: async (req, res) => {
+    try {
+      res.render("user/forgetPass");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  postforgetPassword: async (req, res) => {
+    try {
+      const email = req.body.email;
+      await Usermodel.findOne({ email: email }).then((users) => {
+        if (users) {
+          res.redirect("/");
+          transporter.sendMail({
+            to: [users.email],
+            from: "carway@gmail.com",
+            subject: "Password Reset",
+            html: `<h4>To reset Your Password <a href="${process.env.APP_URL}/resetPassword/${users._id}">Click Here</a>`,
+          });
+        } else {
+          res.redirect("/forgetpassword");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  resetPassword: async (req, res) => {
+    try {
+      const authId = req.params.id;
+      await Usermodel.findOne({ _id: authId }).then((auth) => {
+        res.render("user/resetPassword", { auth });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  postresetPassword: async (req, res) => {
+    try {
+      const auth = req.body.userid;
+      const pass = req.body.password;
+      const hash = await bcrypt.hash(pass, 10);
+      const user = await Usermodel.findOne({ _id: auth });
+      await Usermodel.updateOne(
+        { _id: auth },
+        { $set: { password: hash } },
+        { new: true }
+      ).then((result) => {
+        console.log(result, "password update");
+        res.redirect("/login");
+        transporter.sendMail({
+          to: [user.email],
+          from: "carway@gmail.com",
+          subject: "Status Of reset Password",
+          html: `<h2>Your Password Is Successfully Updated</h2>`,
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

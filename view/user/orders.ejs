@@ -7,6 +7,7 @@
           <h1>My Orders</h1>
           <thead>
             <tr class="main-hading">
+              <th>Name</th>
               <th>Email</th>
               <th>Address</th>
               <!-- <th class="text-center"></th> -->
@@ -23,7 +24,7 @@
    
             <% for(i=0;i<order.length;i++){%>
             <tr id="">
-              <td class="price" data-title="Price"><span><%=order[i].cart.vname %></span></td>
+              <td class="price" data-title="Price"><span><%=order[i].cart.items.productId.name %></span></td>
               <td class="price" data-title="Price"><span><%=order[i].email %></span></td>
                   <td class="price" data-title="Price"><span><%=order[i].address %></span></td>
                   </a></p>

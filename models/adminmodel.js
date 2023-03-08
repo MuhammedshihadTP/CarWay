@@ -15,7 +15,6 @@ const adminschma= new mongoose.Schema({
         required:true
     }
 
-
 })
 
 const adminsignup=mongoose.model("adminsignup",adminschma,"adminsignup");

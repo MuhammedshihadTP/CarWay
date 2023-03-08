@@ -12,9 +12,7 @@
           <th scope="col">Status</th>
           <th scope="col">Discount Amount</th>
           <th scope="col">MinimumCartAmount</th>
-        
-          <th scope="col">exp dat</th>
-          <th scope="col">usageLimit</th>
+         >
           <th scope="col">Action</th>
           <th scope="col">
             <a href="/admin/addcoupen" class="btn btn-success" style="color: aliceblue;" onclick="sumbited()">Add</a>
@@ -24,14 +22,12 @@
       <tbody>
         <%result.forEach(value=>{ %>
         <tr>
-          <!-- <th scope="row"></th> -->
+       
           <td><%=value.code %></td>
           <td><%=value.Available %></td>
           <td><%=value.Status %></td>
           <td><%=value.amount%></td>
           <td><%=value.minCartAmount %></td>
-          <td><% value.expireAfter %></td>
-        
           <td><a onclick="conform('<%=value._id  %>')" class="btn "  id="openmodal" style="color: aliceblue;" >DELETE</a></td>
           <td><a href="/admin/addcoupen/<%=value._id  %>" class="btn "  style="color: aliceblue;" >EDIT</a></td>
         </tr>
