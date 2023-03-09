@@ -226,7 +226,7 @@
       // const query = e.target.value
       console.log(from, to, total, id);
 
-      fetch(`http://localhost:3000/Bookings`, {
+      fetch(`/Bookings`, {
         credentials: "include",
         cache: "default",
         method: "POST",
@@ -281,7 +281,7 @@
       
       console.log(from, to, total, name);
 
-      fetch(`http://localhost:3000/cart`, {
+      fetch(`/cart`, {
         credentials: "include",
         cache: "default",
         method: "POST",
@@ -298,7 +298,21 @@
       }).then(() => window.location.href = '/cart');
 
     } else {
-      alert("dhfgjhkjl;ljkhjghgdf")
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'SELECT THE DATE'
+      })
     }
 
   }

@@ -227,10 +227,11 @@
     const Name = document.getElementById("fullname").value;
     const total = document.getElementById("totale").innerHTML
     const userId = document.getElementById("userId").value;
+   
 
     console.log(vname, Trate, start, end, Email, phoneNo, Address, lice, Name);
     if (Name !== '' && Email !== '' && Address !== '' && phoneNo !== '' && lice !== '') {
-      fetch(`http://localhost:3000/ChEackout/${id}`, {
+      fetch(`/ChEackout/${id}`, {
         headers: {
           'Content-Type': 'application/json'
         },

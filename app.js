@@ -80,6 +80,6 @@ const { urlencoded } = require("express");
 app.use("/", userrouter);
 app.use("/admin",adminrouter);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("started");
 });

@@ -13,6 +13,7 @@ const auth = require("../middleware/auth");
 const coupun = require("../models/coupenmodel");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Order = require("../models/order");
+const { findById } = require("../models/vehicles");
 
 module.exports = {
 
@@ -499,8 +500,15 @@ module.exports = {
       console.log(vehicleid);
       const vehicles = await vehiclesmodel.find({ _id: vehicleid });
       console.log(vehicles);
+      const UserId = req.session.log._id;
+      const useer= await Usermodel.findById({_id:UserId});
+      let cartLength = 0;
+      if (useer) {
+        cartLength = useer.count();
+      }
+      
 
-      res.render("user/prodeuctgrid", { user, vehicles });
+      res.render("user/prodeuctgrid", { user, vehicles,cartLength});
       // res.json({ result });
     } catch (error) {
       console.log(error);

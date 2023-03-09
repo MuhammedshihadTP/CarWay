@@ -8,7 +8,7 @@ const transporter=nodemailer.createTransport({
     
     auth: {
       user: 'muhammedshihad09@gmail.com',
-      pass: ' urynavzdemabylwv',
+      pass:'urynavzdemabylwv'
     }
 })
 
