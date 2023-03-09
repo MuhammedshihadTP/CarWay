@@ -28,7 +28,8 @@ const {
   forgetPassword,
   postforgetPassword,
   resetPassword,
-  postresetPassword
+  postresetPassword,
+  error
 } = require("../controller/Uercontroller");
 
 const router = Router();
@@ -60,6 +61,7 @@ router.get('/forgetpassword',forgetPassword);
 router.post("/forgetpassword",postforgetPassword)
 router.get('/resetPassword/:id',resetPassword);
 router.post('/resetPassword',postresetPassword);
+router.get("/error", error)
 
 
 module.exports = router;

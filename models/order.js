@@ -32,7 +32,14 @@ const orderSchema = mongoose.Schema({
       },
       vname:{
         type:String
-      }
+      },
+      price: {
+        type: Number,
+      },
+
+      Trate: {
+        type: Number,
+      },
     }
     ],
     totalPrice: Number

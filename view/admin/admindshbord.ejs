@@ -1,7 +1,6 @@
 
 <body>
   <%- include('../partials/adminheader.ejs') %> 
-
           <div class="container-fluid px-4" style="color: black;">
               <div class="row g-3 my-2">
                   <div class="col-md-3">
@@ -17,7 +16,7 @@
                   <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
-                              <h3 class="fs-2"></h3>
+                              <h3 class="fs-2"><%=booking %></h3>
                               <p class="fs-5">Booking</p>
                           </div>
                           <i
@@ -35,7 +34,17 @@
                       </div>
                   </div>
 
-                  <!-- <div class="col-md-3">
+                  <div class="col-md-3">
+                    <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                        <div>
+                            <h3 class="fs-2">₹<%=totalRevenue%></h3>
+                            <p class="fs-5">Revenue</p>
+                        </div>
+                        <i class="fas fa-dollar fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                    </div>
+                </div>
+
+                  <div class="col-md-3">
                       <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                           <div>
                               <h3 class="fs-2">%25</h3>
@@ -43,7 +52,7 @@
                           </div>
                           <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                       </div>
-                  </div> -->
+                  </div>
               </div>
 
               <div class="row my-5">

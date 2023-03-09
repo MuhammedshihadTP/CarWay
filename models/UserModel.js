@@ -106,6 +106,8 @@ userschema.methods.count = function () {
   const cart = this.cart;
   if (cart.items.length !== 0) {
     const count = cart.items.length;
+    console.log(count);
+    
     return count;
   } else {
     return 0;

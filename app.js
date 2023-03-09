@@ -9,6 +9,7 @@ const session = require("express-session");
 const nocach=require('nocache');
 const multer=require('multer');
 const fs=require('fs')
+const flash=require("express-flash");
 const stripe=require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // const ejslint=require('ejs-lint')
@@ -60,7 +61,7 @@ app.use(
     cookie: { maxAge: 6000000 },
   })
 );
-
+app.use(flash());
 app.use(express.static("public"));
 app.use(expresslayouts);
 app.use(bodyparser.urlencoded({ extended: true ,limit:"10mb"}));

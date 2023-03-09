@@ -13,6 +13,7 @@ const auth = require("../middleware/auth");
 const coupun = require("../models/coupenmodel");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const Order = require("../models/order");
+
 module.exports = {
 
   // Homepage Controller-----------------
@@ -21,10 +22,17 @@ module.exports = {
     try {
       const userid = req.session.log;
 
+
       await Usermodel.findOne({ _id: userid }).then((user) => {
-        res.render("user/home", { user });
+        let cartLength = 0
+        if (user) {
+          cartLength = user.count();
+        }
+        ;
+        res.render("user/home", { user, cartLength });
       });
     } catch (error) {
+      res.redirect("/error");
       console.log(error);
     }
   },
@@ -58,6 +66,7 @@ module.exports = {
           res.render("user/otp");
       }
     } catch (error) {
+      res.redirect("/error");
       console.log(error);
     }
   },
@@ -82,22 +91,24 @@ module.exports = {
         req.session.signup.Token = token;
         res.render("user/otp");
       }
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/error")
+    }
   },
 
   otpverification: async (req, res) => {
     try {
       console.log(req.session.signup);
-      console.log("helooo");
+
 
       let { name, email, password, username, Token } = req.session.signup;
       if (req.body.otp == Token) {
-        console.log(password, "heloooo");
+
         bcrypt.hash(password, 10).then((hashedPassword) => {
           password = hashedPassword;
-          console.log(password, "hai");
+
           const newUser = new usersignup({ name, email, password, username });
-          console.log(newUser, "hlooooooo");
+
           newUser.save();
         });
 
@@ -106,6 +117,7 @@ module.exports = {
         res.redirect("/otp");
       }
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -123,7 +135,7 @@ module.exports = {
 
   postlogin: async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body, "helllo");
+  
     const user = await Usermodel.findOne({ email: email });
     if (!user) {
       res.status(401).json({ msg: "user not founded" });
@@ -147,6 +159,7 @@ module.exports = {
       req.session.log = null;
       res.redirect("/home");
     } catch (error) {
+      res.redirect("/error");
       console.log(error);
     }
   },
@@ -160,9 +173,6 @@ module.exports = {
       const user = req.session.log;
 
       if (user) {
-        console.log(id, "--------dddddd----");
-        console.log(user);
-
         await vehiclesmodel.findById({ _id: id }).then((prodects) => {
           console.log(prodects, "hiptodet");
           res.cookie("poroduct_id", JSON.stringify(prodects._id).split('"')[1]);
@@ -172,6 +182,7 @@ module.exports = {
         res.redirect("/login");
       }
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -180,16 +191,16 @@ module.exports = {
 
   postCart: async (req, res) => {
     try {
-      console.log(req.body.id, "helloo--------------");
+     
       const id = req.session.log._id;
       const Bprodect = req.body;
       console.log(Bprodect);
       const user = await Usermodel.findById(id);
       let prodect = await vehiclesmodel.findById(req.body.id);
-      console.log(prodect, "-----------------------");
       await user.addCart(prodect, Bprodect);
       res.redirect("/cart");
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -201,16 +212,22 @@ module.exports = {
         const findUser = await Usermodel.findById(userId);
         const cartz = await findUser.populate("cart.items.productId");
 
+        let cartLength = 0;
+        if (findUser) {
+          cartLength = findUser.count();
+        }
+
         const Coupons = await coupun.find({
           Available: { $gt: 0 },
         });
         // res.send(CoupenData);
         console.log(cartz);
-        res.render("user/cart", { user, cartz, Coupons });
+        res.render("user/cart", { user, cartz, Coupons, cartLength });
       } else {
         res.redirect("/login");
       }
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -232,10 +249,7 @@ module.exports = {
 
     const PricE = Userfind.cart.totalPrice;
 
-    console.log(
-      Userfind.cart.totalPrice,
-      "shihaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad"
-    );
+    
 
     await Usermodel.updateOne(
       { _id: userId },
@@ -251,10 +265,11 @@ module.exports = {
       const UserId = req.session.log._id;
       const { Code } = req.body.Coupen;
       const { Totale } = req.body.Coupen;
-      console.log(Code, Totale, UserId, "helooCoupen----------------");
+     
       if (Code !== "") {
         const coupons = await coupun.findOne({ code: Code });
         if (!coupons) {
+          req.flash('error', "invalid Coupen");
           console.log("cod inavlid");
         }
         const index = await coupons.userUsed.findIndex(
@@ -278,7 +293,9 @@ module.exports = {
           console.log(User.cart.totalPrice);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/error")
+     }
   },
   CartCheackOut: async (req, res) => {
     try {
@@ -288,23 +305,19 @@ module.exports = {
       );
       console.log(useer);
       res.render("user/cartCheackout", { useer });
-    } catch (error) {}
+    } catch (error) { }
   },
   PaymentCheacOut: async (req, res) => {
     try {
       // console.log(object);
       const { Product } = req.body;
       const paramsId = req.params.id;
-      console.log(paramsId, "================Params");
-
-      console.log(Product, "--------------------------");
       const UserId = Product.id;
       const address = Product.address;
       const email = Product.email;
       const lice = Product.lice;
       console.log(address);
       const useer = await Usermodel.findOne({ _id: UserId });
-      console.log(useer, "------------");
       const proDetails = useer.cart;
       const Data = proDetails.items.map(({ vname }) => vname).join(",");
       console.log(Data);
@@ -348,15 +361,13 @@ module.exports = {
       );
       if (session.payment_status === "paid") {
         const Product = session.metadata;
-        console.log(Product);
-        console.log(Product, "--------------------------");
         const UserId = Product.user_Id;
         const address = Product.address;
         const email = Product.email;
         const lice = Product.lice;
-        console.log(address);
+     
         const useer = await Usermodel.findOne({ _id: UserId });
-        console.log(useer, "------------");
+       
         const proDetails = useer.cart;
         const orderDeatails = {
           user_Id: UserId,
@@ -369,14 +380,14 @@ module.exports = {
         await order.save();
         console.log(order);
         const Data = proDetails.items.map(({ vname }) => vname).join(",");
-        console.log(Data);
+       ;
         const idd = proDetails.items.map(({ productId }) => productId);
-        console.log(idd);
+       
         const result = await vehiclesmodel.updateMany(
           { _id: { $in: idd } },
           { $set: { booked: true } }
         );
-        console.log(result, "gotit");
+       
         useer.cart.items = [];
         useer.cart.totalPrice = null;
         await useer.save();
@@ -385,6 +396,7 @@ module.exports = {
         res.redirect("/failed");
       }
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -403,12 +415,18 @@ module.exports = {
     try {
       if (req.session.log) {
         const user = req.session.log;
+        const UserId = req.session.log._id;
+        const Useer = await Usermodel.findById(UserId)
+        let cartLength = 0;
+        if (Useer) {
+          cartLength = Useer.count();
+        }
         const vehicles = await vehiclesmodel.find();
-        res.render("user/prodeuctgrid", { vehicles, user });
+        res.render("user/prodeuctgrid", { vehicles, user, cartLength });
       } else {
         res.redirect("/login");
       }
-    } catch (error) {}
+    } catch (error) { }
   },
 
   getavalabelcars: async (req, res) => {
@@ -439,7 +457,7 @@ module.exports = {
     try {
       const userid = req.params.id;
       console.log(userid);
-      console.log("shihad");
+     
       await Usermodel.updateOne(
         { _id: userid },
         {
@@ -453,10 +471,10 @@ module.exports = {
           },
         }
       ).then((result) => {
-        console.log(result, ".l;lklkpoisdfg__________");
         res.redirect(`/profile/${userid}`);
       });
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -491,15 +509,14 @@ module.exports = {
   myBookings: async (req, res) => {
     try {
       const UserId = req.session.log._id;
-      if(req.session.log){
-        const order = await Order.find({ user_Id: UserId });
+      if (req.session.log) {
+        const order = await Order.find({ user_Id: UserId }).populate("cart.items.productId");
         res.render("user/orders", { order });
-
-      }else{
+      } else {
         res.redirect("/login")
       }
-
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -507,6 +524,7 @@ module.exports = {
     try {
       res.render("user/forgetPass");
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -527,6 +545,7 @@ module.exports = {
         }
       });
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -537,6 +556,7 @@ module.exports = {
         res.render("user/resetPassword", { auth });
       });
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
@@ -562,7 +582,19 @@ module.exports = {
         });
       });
     } catch (error) {
+      res.redirect("/error")
       console.log(error);
     }
   },
+
+  error: async (req, res) => {
+    try {
+      res.render("user/404")
+
+    } catch (error) {
+      console.log(error);
+
+    }
+
+  }
 };

@@ -6,23 +6,30 @@ const { post } = require("../routers/adminRouter");
 const { render } = require("ejs");
 const coupenmodel = require("../models/coupenmodel.js");
 const usermodel = require("../models/UserModel");
-
-
+const boookingModel= require('../models/order')
 const { modelName } = require("../models/UserModel");
+
 
 module.exports = {
   adminhome: async (req, res) => {
     try {
       const adminid = req.session.admin;
       const allusers = await usermodel.count();
-
+      const booking=await boookingModel.count();
       const vehiclecount = await vehiclesmodel.count();
+      const orders = await boookingModel.find()
+      let totalRevenue = 0;
+      orders.forEach(order => {
+        totalRevenue += order.cart.totalPrice;
+      });
+      console.log(totalRevenue,"priceeeeeeeeeeeeee");
       const admin = await adminmodel.findOne({ _id: adminid });
       if (admin) {
         res.render("admin/admindshbord", {
-
+          booking,
           vehiclecount,
           allusers,
+          totalRevenue,
         });
       } else {
         res.redirect("/admin/signup");
@@ -100,27 +107,6 @@ module.exports = {
     try {
       req.session.admin = null;
       res.redirect("/admin/login");
-    } catch (error) {
-      res.redirect("/admin/404");
-      console.log(error);
-    }
-  },
-
-  getdashbord: async (req, res) => {
-    try {
-      const allusers = await usermodel.count();
-    
-      const vehiclecount = await vehiclesmodel.count();
-      const adminid = req.session.admin;
-      if (adminid) {
-        res.render("admin/admindshbord", {
-          
-          vehiclecount,
-          allusers,
-        });
-      } else {
-        res.redirect("/admin/login");
-      }
     } catch (error) {
       res.redirect("/admin/404");
       console.log(error);
@@ -360,9 +346,8 @@ module.exports = {
   bookingdetail: async (req, res) => {
     try {
       if (req.session.admin) {
-        await bookingModel.find().then((result) => {
-          res.render("admin/bookingdetails", { result });
-        });
+        const result = await boookingModel.find().populate( "cart.items.productId");
+        res.render("admin/bookingdetails", { result });
       }
     } catch (error) {
       res.redirect("/admin/404");

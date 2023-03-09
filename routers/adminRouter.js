@@ -36,7 +36,6 @@ router.post("/signup", postadminsignup);
 router.get("/login", getadminlogin);
 router.post("/login", postadminlogin);
 router.get("/logout", adminlogout);
-router.get('/dashbord',getdashbord)
 router.get("/vehicles", getaddvehcles);
 router.post("/vehicles", postaddvehicles);
 router.get("/viewvehicles", viwevehcilelist);
