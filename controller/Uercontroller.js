@@ -270,7 +270,7 @@ module.exports = {
       if (Code !== "") {
         const coupons = await coupun.findOne({ code: Code });
         if (!coupons) {
-          req.flash('error', "invalid Coupen");
+       
           console.log("cod inavlid");
         }
         const index = await coupons.userUsed.findIndex(
