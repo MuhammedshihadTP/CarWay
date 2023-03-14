@@ -9,29 +9,33 @@
             <tr class="main-hading">
               <th></th>
               <th>Vhicle Name</th>
-              <th>Email</th>
+              <th>Start Date</th>
+              <th>End Date</th>
               <th>Address</th>
               <!-- <th class="text-center"></th> -->
               <!-- <th class="text-center">QUANTITY</th> -->
               <th class="text-center">PRICE</th>
-           
             </tr>
           </thead>
-             <tbody>
-              <% for (let i = 0; i < order.length; i++) { %>
-                <% const cartItems = order[i].cart.items %>
-                <% for (let j = 0; j < cartItems.length; j++) { %>
-                  <tr>
-                    <td class="image" data-title="No"><img src="../images/<%=cartItems[j].productId.image %>" alt="#"></td>
-                    <td><%= cartItems[j].productId.name %></td>
-                    <td><%= order[i].email %></td>
-                    <td><%= order[i].address %></td>
-                    <td>₹<%= cartItems[j].price %></td>
-                  </tr>
-                <% } %>
-              <% } %>
-            </tbody>
-        
+          <tbody>
+            <% for (let i = 0; i < order.length; i++) { %> <% const cartItems =
+            order[i].cart.items %> <% for (let j = 0; j < cartItems.length; j++)
+            { %>
+            <tr>
+              <td class="image" data-title="No">
+                <img
+                  src="../images/<%=cartItems[j].productId.image %>"
+                  alt="#"
+                />
+              </td>
+              <td><%=cartItems[j].productId.name %></td>
+              <td><%=cartItems[j].strattime%></td>
+              <td><%=cartItems[j].endtime%></td>
+              <td><%=order[i].address %></td>
+              <td>₹<%=cartItems[j].price %></td>
+            </tr>
+            <% } %> <% } %>
+          </tbody>
         </table>
       </div>
     </div>

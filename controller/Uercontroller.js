@@ -129,7 +129,8 @@ module.exports = {
       res.redirect("/login");
     } else {
       const error = req.session.loginerr;
-      res.render("user/login");
+      req.session.loginerr = null; 
+      res.render("user/login",{error});
       console.log(error);
     }
   },
@@ -139,7 +140,8 @@ module.exports = {
   
     const user = await Usermodel.findOne({ email: email });
     if (!user) {
-      res.status(401).json({ msg: "user not founded" });
+      req.session.loginerr = 'User not found'; // set login error in session
+      res.redirect('/login')
     }
     if (user && user.block) {
       bcrypt.compare(password, user.password).then((isvalid) => {
@@ -147,11 +149,13 @@ module.exports = {
           req.session.log = user;
           res.redirect("/home");
         } else {
+          req.session.loginerr = 'Invalid password';
           res.redirect("/login");
         }
       });
     } else {
-      res.json({ msg: "Your  blocked" });
+      req.session.loginerr = 'Your account is blocked'; 
+     res.redirect('/login');
     }
   },
 
@@ -212,6 +216,7 @@ module.exports = {
         const userId = req.session.log._id;
         const findUser = await Usermodel.findById(userId);
         const cartz = await findUser.populate("cart.items.productId");
+        
 
         let cartLength = 0;
         if (findUser) {

@@ -19,7 +19,7 @@
             </div>
         </div>
        
-        <button class=" w-100 " style="background-color:#F7941D; border-radius: 10px; border: none; color: aliceblue; height: 40px" type="submit"
+        <button  class=" w-100 " style="background-color:#F7941D; border-radius: 10px; border: none; color: aliceblue; height: 40px" type="submit"
             >Login</button>
 
             <a class=" w-100   fs-6 text-center" href="/signup"  
@@ -77,3 +77,8 @@ font-size: 20px;
 margin-top: 15px;
 }
 </style>
+
+<% if (error) { %>
+  <script>alert("<%= error%>");</script>
+<% } %>
+

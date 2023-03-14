@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-const vehicles = require("./vehicles");
-
-
+const vehicles = require("./vehicles")
 const userschema = new mongoose.Schema({
   name: {
     type: String,

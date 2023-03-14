@@ -24,7 +24,7 @@
             <% for(let i=0;i<cartz.cart.items.length;i++){ %>
             <% let cartItems=cartz.cart.items[i] %>
 
-            <tr id="<%=cartz.cart.items[i].productId._id %>">
+            <tr id="<%=cartz.cart.items[i].productId?._id %>">
               <td class="image" data-title="No"><img src="../images/<%=cartItems.productId.image %>" alt="#"></td>
               <td class="product-des" data-title="Description">
                 <p class="product-name"><a href="#">
